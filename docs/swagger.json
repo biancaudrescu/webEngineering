@@ -1,0 +1,942 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Airport statistics API design documentation.",
+    "version": "1.0.0",
+    "title": "Airport API",
+    "contact": {
+      "email": "b.g.udrescu@student.rug.nl"
+    }
+  },
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/airports": {
+      "get": {
+        "tags": [
+          "airports"
+        ],
+        "summary": "Returns all airports in the US.",
+        "operationId": "airports",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The 3 letter code for this airport, assigned by IATA."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The full name of this airport."
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/carriers": {
+      "get": {
+        "tags": [
+          "carriers"
+        ],
+        "summary": "Returns all carriers operating in US airports",
+        "operationId": "carriers",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The 3 letter code for this carrier\ufffd, assigned by IATA. For more information, consult this List of Airport Codes."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The full name of this airline carrier."
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/airports/{airportId}/carriers": {
+      "get": {
+        "tags": [
+          "airports"
+        ],
+        "summary": "Returns all carriers operating at a specific US airport.",
+        "operationId": "carriersOfAirport",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "airportId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this airport, assigned by IATA. For more information, consult this List of Airport Codes."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The 3 letter code for this carriers,assigned by IATA."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The full name of this airline carrier."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Airport ID must be an string with exactly 3 letters."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "404": {
+            "description": "An airport with the specified ID was not found."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      }
+    },
+    "/airports/{airportId}/carriers/{carrierId}/statistics": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "All statistics about flights of a carrier to/from a US airport for a given month/all months available. ",
+        "operationId": "getStatisticsByAirportAndMonth",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "airportId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this airport, assigned by IATA. For more information, consult this List of Airport Codes."
+          },
+          {
+            "in": "path",
+            "name": "carrierId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this carrier, assigned by IATA. For more information, consult this List of Carrier Codes."
+          },
+          {
+            "in": "query",
+            "name": "year/month",
+            "schema": {
+              "default": "allYnM",
+              "required": false,
+              "type": "string",
+              "minLength": 6,
+              "maxLength": 7
+            },
+            "description": "Specified year and month."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "flights": {
+                    "type": "object",
+                    "properties": {
+                      "cancelled": {
+                        "type": "int"
+                      },
+                      "on_time": {
+                        "type": "int"
+                      },
+                      "total": {
+                        "type": "int"
+                      },
+                      "delayed": {
+                        "type": "int"
+                      },
+                      "diverted": {
+                        "type": "int"
+                      },
+                      "num_of_delays": {
+                        "type": "object",
+                        "properties": {
+                          "weather": {
+                            "type": "int"
+                          },
+                          "security": {
+                            "type": "int"
+                          },
+                          "late_aircraft": {
+                            "type": "int"
+                          },
+                          "national_aviation": {
+                            "type": "int"
+                          },
+                          "system": {
+                            "type": "int"
+                          },
+                          "carrier": {
+                            "type": "int"
+                          }
+                        }
+                      },
+                      "minutes_delayed": {
+                        "type": "object",
+                        "properties": {
+                          "late_aircraft": {
+                            "type": "int"
+                          },
+                          "weather": {
+                            "type": "int"
+                          },
+                          "carrier": {
+                            "type": "int"
+                          },
+                          "security": {
+                            "type": "int"
+                          },
+                          "total": {
+                            "type": "int"
+                          },
+                          "national_aviation_system": {
+                            "type": "int"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.Input should be of the form year/month(ex:2003/4)."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "404": {
+            "description": "Statistics within the specified range were not found."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "All statistics about flights of a carrier to/from a US airport for a given month/all months available. ",
+        "operationId": "postStatisticsByAirportAndMonth",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "airportId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this airport, assigned by IATA. For more information, consult this List of Airport Codes."
+          },
+          {
+            "in": "path",
+            "name": "carrierId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this carrier, assigned by IATA. For more information, consult this List of Carrier Codes."
+          },
+          {
+            "in": "query",
+            "name": "year/month",
+            "schema": {
+              "default": "allYnM",
+              "required": false,
+              "type": "string",
+              "minLength": 6,
+              "maxLength": 7
+            },
+            "description": "Specified year and month."
+          }
+        ],
+        "requestBody": {
+          "description": "Statistics dictionary",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "flights": {
+                  "type": "object",
+                  "properties": {
+                    "cancelled": {
+                      "type": "int"
+                    },
+                    "on_time": {
+                      "type": "int"
+                    },
+                    "total": {
+                      "type": "int"
+                    },
+                    "delayed": {
+                      "type": "int"
+                    },
+                    "diverted": {
+                      "type": "int"
+                    },
+                    "num_of_delays": {
+                      "type": "object",
+                      "properties": {
+                        "weather": {
+                          "type": "int"
+                        },
+                        "security": {
+                          "type": "int"
+                        },
+                        "late_aircraft": {
+                          "type": "int"
+                        },
+                        "national_aviation": {
+                          "type": "int"
+                        },
+                        "system": {
+                          "type": "int"
+                        },
+                        "carrier": {
+                          "type": "int"
+                        }
+                      }
+                    },
+                    "minutes_delayed": {
+                      "type": "object",
+                      "properties": {
+                        "late_aircraft": {
+                          "type": "int"
+                        },
+                        "weather": {
+                          "type": "int"
+                        },
+                        "carrier": {
+                          "type": "int"
+                        },
+                        "security": {
+                          "type": "int"
+                        },
+                        "total": {
+                          "type": "int"
+                        },
+                        "national_aviation_system": {
+                          "type": "int"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request. Check documentation for input and json struct."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "Update statistics about flights of a carrier to/from a US airport for a given month/all months available. ",
+        "operationId": "putStatisticsByAirportAndMonth",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "airportId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this airport, assigned by IATA. For more information, consult this List of Airport Codes."
+          },
+          {
+            "in": "path",
+            "name": "carrierId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this carrier, assigned by IATA. For more information, consult this List of Carrier Codes."
+          },
+          {
+            "in": "query",
+            "name": "year/month",
+            "schema": {
+              "default": "allYnM",
+              "required": false,
+              "type": "string",
+              "minLength": 6,
+              "maxLength": 7
+            },
+            "description": "Specified year and month."
+          }
+        ],
+        "requestBody": {
+          "description": "Statistics dictionary",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "flights": {
+                  "type": "object",
+                  "properties": {
+                    "cancelled": {
+                      "type": "int"
+                    },
+                    "on_time": {
+                      "type": "int"
+                    },
+                    "total": {
+                      "type": "int"
+                    },
+                    "delayed": {
+                      "type": "int"
+                    },
+                    "diverted": {
+                      "type": "int"
+                    },
+                    "num_of_delays": {
+                      "type": "object",
+                      "properties": {
+                        "weather": {
+                          "type": "int"
+                        },
+                        "security": {
+                          "type": "int"
+                        },
+                        "late_aircraft": {
+                          "type": "int"
+                        },
+                        "national_aviation": {
+                          "type": "int"
+                        },
+                        "system": {
+                          "type": "int"
+                        },
+                        "carrier": {
+                          "type": "int"
+                        }
+                      }
+                    },
+                    "minutes_delayed": {
+                      "type": "object",
+                      "properties": {
+                        "late_aircraft": {
+                          "type": "int"
+                        },
+                        "weather": {
+                          "type": "int"
+                        },
+                        "carrier": {
+                          "type": "int"
+                        },
+                        "security": {
+                          "type": "int"
+                        },
+                        "total": {
+                          "type": "int"
+                        },
+                        "national_aviation_system": {
+                          "type": "int"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "400": {
+            "description": "Bad request. Check documentation for input and json struct."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "404": {
+            "description": "Resource not found."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "Delete statistics for a given combination of Airport, Carrier and Month+Year.",
+        "operationId": "deleteStatisticsByAirportAndMonth",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "airportId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this airport, assigned by IATA. For more information, consult this List of Airport Codes."
+          },
+          {
+            "in": "path",
+            "name": "carrierId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this carrier, assigned by IATA. For more information, consult this List of Carrier Codes."
+          },
+          {
+            "in": "query",
+            "name": "year/month",
+            "schema": {
+              "default": "allYnM",
+              "required": false,
+              "type": "string",
+              "minLength": 6,
+              "maxLength": 7
+            },
+            "description": "Specified year and month."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation"
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/airports/{airportId}/carriers/{carrierId}/flights": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "Returns the number of on-time, delayed, and cancelled flights of a carrier.",
+        "operationId": "getFlightNumbers",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "airportId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this airport, assigned by IATA. For more information, consult this List of Airport Codes."
+          },
+          {
+            "in": "path",
+            "name": "carrierId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "The 3 letter code for this carrier, assigned by IATA. For more information, consult this List of Carrier Codes."
+          },
+          {
+            "in": "query",
+            "name": "year/month",
+            "schema": {
+              "default": "allYnM",
+              "required": true,
+              "type": "string",
+              "minLength": 6,
+              "maxLength": 7
+            },
+            "description": "Specified year and month."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cancelled": {
+                    "type": "int"
+                  },
+                  "on_time": {
+                    "type": "int"
+                  },
+                  "delayed": {
+                    "type": "int"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.Input should be of the form year/month(ex:2003/4)."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "404": {
+            "description": "Statistics  within the specified range were not found."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      }
+    },
+    "/carriers/delays": {
+      "get": {
+        "tags": [
+          "carriers"
+        ],
+        "summary": "Returns a list of per-carrier delays",
+        "operationId": "delays",
+        "produces": [
+          "text/csv",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "reason",
+            "schema": {
+              "required": true,
+              "type": "string",
+              "enum": "-carrier -late-aircraft -total"
+            },
+            "description": "Specified reason for delay."
+          },
+          {
+            "in": "query",
+            "name": "year/month",
+            "schema": {
+              "default": "allYnM",
+              "required": false,
+              "type": "string",
+              "minLength": 6,
+              "maxLength": 7
+            },
+            "description": "Specified year and month."
+          },
+          {
+            "in": "query",
+            "name": "airportId",
+            "schema": {
+              "default": "all",
+              "required": false,
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "Specified airport."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "minutes": {
+                    "type": "int",
+                    "description": "Minutes of delay"
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "Carrier code."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Input should be of the form reason (ex:carrier), year/month(ex:2003/4) and airportId (ex:ATL)."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "404": {
+            "description": "Statistics were not found."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      }
+    },
+    "/carriers/{carrierId}/delays/statistics": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "Get mean, median, standard deviation for a specific carrier and route.",
+        "operationId": "delayStatisticsForCarrier",
+        "produces": [
+          "application/json",
+          "text/csv"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "outgoing",
+            "schema": {
+              "required": true,
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "Outgoing airport code."
+          },
+          {
+            "in": "query",
+            "name": "incoming",
+            "schema": {
+              "required": true,
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "Incoming airport code."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mean": {
+                  "type": "float",
+                  "description": "Mean of flight delays"
+                },
+                "median": {
+                  "type": "int",
+                  "description": "Median of flight delays."
+                },
+                "standard-deviation": {
+                  "type": "float",
+                  "description": "Standard deviation of flight delays."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Input should be of the form outgoing airport code (ex:ATL), incoming airport code (ex:SLC) and carrier code (ex:AA)."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "404": {
+            "description": "Statistics were not found."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      }
+    },
+    "/carriers/delays/statistics": {
+      "get": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "Get mean, median, standard deviation for all carriers and a given route.",
+        "operationId": "getDelayStatistics",
+        "produces": [
+          "application/json",
+          "text/csv"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "outgoing",
+            "schema": {
+              "required": true,
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "Outgoing airport code."
+          },
+          {
+            "in": "query",
+            "name": "incoming",
+            "schema": {
+              "required": true,
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "description": "Incoming airport code."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "mean": {
+                    "type": "float",
+                    "description": "Mean of flight delays"
+                  },
+                  "median": {
+                    "type": "int",
+                    "description": "Median of flight delays."
+                  },
+                  "standard-deviation": {
+                    "type": "float",
+                    "description": "Standard deviation of flight delays."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Input should be of the form outgoing airport code (ex:ATL), incoming airport code (ex:SLC)."
+          },
+          "401": {
+            "description": "Information is missing or invalid."
+          },
+          "404": {
+            "description": "Statistics were not found."
+          },
+          "5XX": {
+            "description": "Unexpected error."
+          }
+        }
+      }
+    }
+  }
+}
