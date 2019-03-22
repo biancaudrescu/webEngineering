@@ -1,0 +1,18 @@
+[{
+    "airport": {
+      "code": "ATL", 
+      "name": "Atlanta, GA: Hartsfield-Jackson Atlanta International"
+    }, 
+    "time_label": "2003/6",
+    "carrier": {
+      "code": "AA", 
+      "name": "American Airlines Inc."
+    },
+    "flights": {
+        "cancelled": 5, 
+        "on time": 561, 
+        "total": 752, 
+        "delayed": 186, 
+        "diverted": 0
+    }
+}]
