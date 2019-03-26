@@ -34,17 +34,20 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     url(r'^airports/$', views.ListAirports.as_view()),
-    url(r'^airports/(?P<airport_id>[\w]+)/carriers/', views.ListCarriersOfAirport.as_view()),
+    url(r'^airports/(?P<airport_id>[\w]+)/$',views.RIAirportView.as_view()),
+    url(r'^airports/(?P<airport_id>[\w]+)/carriers/$', views.ListCarriersOfAirport.as_view()),
 
     url(r'^carriers/$', views.ListCarriers.as_view()),
-    url(r'^carriers/comments/$', views.CommentView.as_view()),
-    url(r'^carriers/rankings/$',views.Rankings.as_view()),
+    url(r'^carriers/(?P<carrier_id>[\w]+)/$',views.RICarrierView.as_view()),
 
     url(r'^statistics/$', views.AllStatistics.as_view()),
     url(r'^statistics/flights/$', views.FlightsStatistics.as_view()),
     url(r'^statistics/delays/$', views.DelayStatistics.as_view()),
     url(r'^statistics/description/$', views.FancyStatistics.as_view()),
 
+    url(r'^rankings/$',views.Rankings.as_view()),
+    url(r'^comments/$', views.CommentView.as_view()),
+    
     url(r'^docs/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
 

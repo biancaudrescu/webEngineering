@@ -17,6 +17,8 @@ from rest_framework_csv import renderers as r
 from rest_framework import authentication, permissions
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 from airports.models import Airport, Carrier, Statistics, StatisticsGroup, Flights, NumDelays, CarrierComment
@@ -47,53 +49,54 @@ class ListAirports(APIView):
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
     def get(self, request, format=None):
-        type = request.GET.get('type','')
         res_data = AirportSerializer(Airport.objects.all(),many=True).data
-        if type == 'csv':
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="airports.csv"'
-            writer = csv.writer(response)
-            writer.writerow(['code', 'name'])
-            for x in res_data:
-                writer.writerow([x['code'],x['name']])
-            return response
+        for airport in res_data:
+            airport["link"] = "localhost:8000/airports/"+airport["code"]
         return Response(res_data)
+
+class RIAirportView(APIView):
+
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
+    def get(self, request, airport_id, format=None):
+        airport = AirportSerializer(Airport.objects.get(code=airport_id)).data
+        airport["link"] = "localhost:8000/airports/"+airport["code"]
+        return Response(airport)
 
 class ListCarriers(APIView):
     """
     get:
+        List all carriers in the US.
 
-    List all carriers in the US.
-
-    example output:
-    [
-    {
-        "code": "AA",
-        "name": "American Airlines Inc."
-    },
-    {
-        "code": "AS",
-        "name": "Alaska Airlines Inc."
-    },
-    .
-    .
-    .
-    ]
+        example output:
+        [
+        {
+            "code": "AA",
+            "name": "American Airlines Inc."
+        },
+        {
+            "code": "AS",
+            "name": "Alaska Airlines Inc."
+        }   
+        ]
     """
+
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
     def get(self, request, format=None):
-        type = request.GET.get('type','')
         res_data = CarrierSerializer(Carrier.objects.all(), many=True).data
-        if type == 'text/csv':
-            response = HttpResponse(content_type='csv')
-            response['Content-Disposition'] = 'attachment; filename="carriers.csv"'
-            writer = csv.writer(response)
-            writer.writerow(['code', 'name'])
-            for x in res_data:
-                writer.writerow([x['code'],x['name']])
-            return response
+        for carrier in res_data:
+            carrier["link"] = "localhost:8000/carriers/"+carrier["code"]
         return Response(res_data)
+
+class RICarrierView(APIView):
+
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
+    def get(self, request, carrier_id, format=None):
+        carrier = CarrierSerializer(Carrier.objects.get(code=carrier_id)).data
+        carrier["link"] = "localhost:8000/carriers/"+carrier["code"]
+        return Response(carrier)
 
 class ListCarriersOfAirport(APIView):
     """
@@ -133,55 +136,53 @@ class ListCarriersOfAirport(APIView):
 class AllStatistics(APIView):
     """
     get:
+        List full statistics for a specific airport, carrier and time.
 
-    List full statistics for a specific airport, carrier and time.
+        example input: .../statistics/?a_code=ATL&c_code=AA?month_year=2003/6
 
-    example input - .../statistics/?a_code=ATL&c_code=AA?month_year=2003/6
-
-    example output:
-    [
-    {
-        "airport": "ATL",
-        "carrier": "AA",
-        "statistics": {
-            "minutes_del": {
-                "late_aircraft": 1269,
-                "weather": 1722,
-                "carrier": 1367,
-                "security": 139,
-                "total": 8314,
-                "nat_avi_sys": 3817
+        example output:
+        [
+        {
+            "airport": "ATL",
+            "carrier": "AA",
+            "statistics": {
+                "minutes_del": {
+                    "late_aircraft": 1269,
+                    "weather": 1722,
+                    "carrier": 1367,
+                    "security": 139,
+                    "total": 8314,
+                    "nat_avi_sys": 3817
+                },
+                "num_del": {
+                    "weather": 28,
+                    "security": 2,
+                    "late_aircraft": 18,
+                    "nat_avi_sys": 105,
+                    "carrier": 34
+                },
+                "flights": {
+                    "cancelled": 5,
+                    "on_time": 561,
+                    "total": 752,
+                    "delayed": 186,
+                    "diverted": 0
+                }
             },
-            "num_del": {
-                "weather": 28,
-                "security": 2,
-                "late_aircraft": 18,
-                "nat_avi_sys": 105,
-                "carrier": 34
-            },
-            "flights": {
-                "cancelled": 5,
-                "on_time": 561,
-                "total": 752,
-                "delayed": 186,
-                "diverted": 0
-            }
-        },
-        "time": "2003/6"
-    }
-    ]
+            "time": "2003/6"
+        }
+        ]
 
     post:
-
-    Insert new statistics. Body is the same as the example output for GET.
+        Insert new statistics. 
+        
+        Body is the same as the example output for GET.
 
     put:
-
-    Modify statistics. Body is the same as in POST.
+        Modify statistics. Body is the same as in POST.
 
     delete:
-
-    Delete a statistics entry. Url is the same as in the GET method.
+        Delete a statistics entry. Url is the same as in the GET method.
 
     """
 
@@ -195,9 +196,14 @@ class AllStatistics(APIView):
         month_year = request.GET.get('month_year','all')
         stats = StatisticsGroup.objects.filter(airport=airport_code,carrier=carrier_code)
         if month_year == 'all':
-            return Response(StatisticsGroupSerializer(stats,many=True).data)
+            res_data = StatisticsGroupSerializer(stats,many=True).data
+            for stat in res_data:
+                stat["link"] = "localhost:8000/statistics/?a_code="+stat["airport"]+"&c_code="+stat["carrier"]+"&month_year="+stat["time"]
+            return Response(res_data)
         stats = stats.filter(time=month_year)
-        return Response(StatisticsGroupSerializer(stats,many=True).data)
+        stats = StatisticsGroupSerializer(stats,many=True).data
+        stats[0]["link"] = "localhost:8000/statistics/?a_code="+stats[0]["airport"]+"&c_code="+stats[0]["carrier"]+"&month_year="+stats[0]["time"]
+        return Response(stats)
 
     def post(self, request, format=None):
         stat_data = request.data
@@ -282,7 +288,8 @@ class FlightsStatistics(APIView):
                 "on_time": flights["on_time"],
                 "delayed": flights["delayed"],
                 "cancelled": flights["cancelled"],
-                "time": stat["time_id"]
+                "time": stat["time_id"],
+                "link": "localhost:8000/statistics/flights/?a_code="+airport_code+"&c_code="+carrier_code+"&month_year="+stat["time_id"]
             })
         return Response(list)
 
@@ -346,13 +353,17 @@ class DelayStatistics(APIView):
                 list.append({
                     "carrier": num_del["carrier"],
                     "late_airport": num_del["late_aircraft"],
-                    "time": stat["time_id"]
+                    "time": stat["time_id"],
+                    "link": "localhost:8000/statistics/delays/?a_code="+airport_code+"&c_code="+carrier_code+"&month_year="+stat["time_id"]
+
                 })
             else:
                 num_del.pop('_state')
                 list.append({
                     "delays": num_del,
-                    "time": stat["time_id"]
+                    "time": stat["time_id"],
+                    "link": "localhost:8000/statistics/delays/?a_code="+airport_code+"&c_code="+carrier_code+"&month_year="+stat["time_id"]
+
                 })
         return Response(list)
 
@@ -433,41 +444,42 @@ class FancyStatistics(APIView):
                 "avg": statistics.mean(late_air_delays),
                 "median": statistics.median(late_air_delays),
                 "std": statistics.stdev(late_air_delays)
-            }
+            },
+            "link": "localhost:8000/statistics/description/?from="+from_a+"&to="+to_a+"&carrier="+carrier
         }
 
         return Response(description)
 
 class Rankings(APIView):
         """
-        get:
+        retrieve:
 
-        Get rankings of carriers based on query parameters.
+            Get rankings of carriers based on query parameters.
 
-        example input - .../carriers/rankings/?mdc=1&ndla=1
+            example input - .../carriers/rankings/?mdc=1&ndla=1
 
-        example output - 
+            example output - 
 
-        [
-            {
-                "carrier": "EV",
-                "min_del_carrier": 0,
-                "num_del_late_air": 0
-            },
-            {
-                "carrier": "RU",
-                "min_del_carrier": 2,
-                "num_del_late_air": 1
-            },
-            {
-                "carrier": "HP",
-                "min_del_carrier": 3,
-                "num_del_late_air": 2
-            },
-            .
-            .
-            .
-        ]
+            [
+                {
+                    "carrier": "EV",
+                    "min_del_carrier": 0,
+                    "num_del_late_air": 0
+                },
+                {
+                    "carrier": "RU",
+                    "min_del_carrier": 2,
+                    "num_del_late_air": 1
+                },
+                {
+                    "carrier": "HP",
+                    "min_del_carrier": 3,
+                    "num_del_late_air": 2
+                },
+                .
+                .
+                .
+            ]
         """
         def get(self, request, format=None):
             min_del_carrier = request.GET.get("mdc","0")
@@ -538,6 +550,8 @@ class Rankings(APIView):
 
             for i in range(len(output)):
                 output[i].pop("num", None)
+            
+            output.append({"link": "localhost:8000/carriers/rankings/?mdc="+min_del_carrier+"&mdla="+min_del_late_air+"&ndc="+num_del_carrier+"&ndla="+num_del_late_air})
             return Response(output)
 
 class CommentView(APIView):
@@ -574,6 +588,8 @@ class CommentView(APIView):
             carrier = request.GET.get("carrier", "all")
             if carrier == "all":
                 comments = CarrierComment.objects.all().values()
+                for comment in comments:
+                    comment["link"] = "localhost:8000/comments/?id="+str(comment["id"])
                 return Response(comments)
 
             try:
@@ -582,6 +598,8 @@ class CommentView(APIView):
                 return HttpResponseBadRequest("Carrier doesn't exist")
             
             comments = CarrierComment.objects.filter(carrier=carrier).values()
+            for comment in comments:
+                comment["link"] = "localhost:8000/comments/?id="+str(comment["id"])
             return Response(comments)
         
 
@@ -598,6 +616,7 @@ class CommentView(APIView):
         }]
 
         """
+        @swagger_auto_schema(request_body=CarrierCommentSerializer)
         def post(self, request, format=None):
             data = request.data[0]
             comment = CarrierCommentSerializer(data=data)
@@ -621,6 +640,7 @@ class CommentView(APIView):
             "comment": "Just take my money!"
         }]
         """
+        @swagger_auto_schema(request_body=CarrierCommentSerializer)
         def put(self, request, format=None):
             data = request.data[0]
             comment = CarrierComment.objects.filter(id=data["id"])
