@@ -16,9 +16,11 @@ from rest_framework.response import Response
 from rest_framework_csv import renderers as r
 from rest_framework import authentication, permissions
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
-from airports.models import Airport, Carrier, Statistics, StatisticsGroup, Flights, NumDelays
-from airports.serializers import AirportSerializer, CarrierSerializer, StatisticsGroupSerializer
+
+from airports.models import Airport, Carrier, Statistics, StatisticsGroup, Flights, NumDelays, CarrierComment
+from airports.serializers import AirportSerializer, CarrierSerializer, StatisticsGroupSerializer, CarrierCommentSerializer
 
 
 class ListAirports(APIView):
@@ -180,7 +182,6 @@ class AllStatistics(APIView):
     delete:
 
     Delete a statistics entry. Url is the same as in the GET method.
-
 
     """
 
@@ -436,3 +437,219 @@ class FancyStatistics(APIView):
         }
 
         return Response(description)
+
+class Rankings(APIView):
+        """
+        get:
+
+        Get rankings of carriers based on query parameters.
+
+        example input - .../carriers/rankings/?mdc=1&ndla=1
+
+        example output - 
+
+        [
+            {
+                "carrier": "EV",
+                "min_del_carrier": 0,
+                "num_del_late_air": 0
+            },
+            {
+                "carrier": "RU",
+                "min_del_carrier": 2,
+                "num_del_late_air": 1
+            },
+            {
+                "carrier": "HP",
+                "min_del_carrier": 3,
+                "num_del_late_air": 2
+            },
+            .
+            .
+            .
+        ]
+        """
+        def get(self, request, format=None):
+            min_del_carrier = request.GET.get("mdc","0")
+            min_del_late_air = request.GET.get("mdla","0")
+            num_del_carrier = request.GET.get("ndc","0")
+            num_del_late_air = request.GET.get("ndla","0")
+
+            carriers = CarrierSerializer(Carrier.objects.all(),many=True).data
+            stats = StatisticsGroupSerializer(StatisticsGroup.objects.all(),many=True).data
+            output = []
+            for x in carriers:
+                x_out = dict({"carrier": x["code"], "num": 0})
+                output.append(x_out)
+
+            for stat in stats:
+                code = stat["carrier"]
+                i = -1
+                for idx in range(len(output)):
+                    if output[idx]["carrier"] == code:
+                        output[idx]["num"] += 1
+                        i = idx
+                        
+                if i != -1:
+                    if min_del_carrier == "1":
+                        if "min_del_carrier" in output:
+                            output[i]["min_del_carrier"] += stat["statistics"]["minutes_del"]["carrier"]
+                        else:
+                            output[i]["min_del_carrier"] = stat["statistics"]["minutes_del"]["carrier"]
+                    if min_del_late_air == "1":
+                        if "min_del_late_air" in output:
+                            output[i]["min_del_late_air"] += stat["statistics"]["minutes_del"]["late_aircraft"]
+                        else:
+                            output[i]["min_del_late_air"] = stat["statistics"]["minutes_del"]["late_aircraft"]
+                    if num_del_carrier == "1":
+                        if "num_del_carrier" in output:
+                            output[i]["num_del_carrier"] += stat["statistics"]["num_del"]["carrier"]
+                        else:
+                            output[i]["num_del_carrier"] = stat["statistics"]["num_del"]["carrier"]
+                    if num_del_late_air == "1":
+                        if "num_del_late_air" in output:
+                            output[i]["num_del_late_air"] += stat["statistics"]["num_del"]["late_aircraft"]
+                        else:
+                            output[i]["num_del_late_air"] = stat["statistics"]["num_del"]["late_aircraft"]
+
+            idx = 0
+            while idx < len(output):
+                if output[idx]["num"] == 0:
+                    del output[idx]
+                else:
+                    idx += 1
+            
+            if min_del_carrier == "1":
+                output.sort(key=(lambda a : a["min_del_carrier"]/a["num"]))
+                for i in range(len(output)):
+                    output[i]["min_del_carrier"] = i
+            if min_del_late_air == "1":
+                output.sort(key=(lambda a : a["min_del_late_air"]/a["num"]))
+                for i in range(len(output)):
+                    output[i]["min_del_late_air"] = i
+            if num_del_carrier == "1":
+                output.sort(key=(lambda a : a["num_del_carrier"]/a["num"]))
+                for i in range(len(output)):
+                    output[i]["num_del_carrier"] = i
+            if num_del_late_air == "1":
+                output.sort(key=(lambda a : a["num_del_late_air"]/a["num"]))
+                for i in range(len(output)):
+                    output[i]["num_del_late_air"] = i
+
+            for i in range(len(output)):
+                output[i].pop("num", None)
+            return Response(output)
+
+class CommentView(APIView):
+
+        """
+        get: 
+
+        Get list of comments for one or all carriers.
+
+        example input - .../carriers/comments/?carrier=AA
+
+        example output -
+
+        [
+            {
+                "id": 1,
+                "carrier_id": "AA",
+                "comment": "Great carrier!"
+            },
+            {
+                "id": 2,
+                "carrier_id": "AA",
+                "comment": "Wow this carrier changed my life!"
+            },
+            .
+            .
+            .
+        ]
+        """
+
+        renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
+        def get(self, request, format=None):
+            carrier = request.GET.get("carrier", "all")
+            if carrier == "all":
+                comments = CarrierComment.objects.all().values()
+                return Response(comments)
+
+            try:
+                car = Carrier.objects.get(code=carrier)
+            except ObjectDoesNotExist:
+                return HttpResponseBadRequest("Carrier doesn't exist")
+            
+            comments = CarrierComment.objects.filter(carrier=carrier).values()
+            return Response(comments)
+        
+
+        """
+        post: 
+
+        Post a new comment
+
+        example input - .../carriers/comments/
+
+        [{
+            "carrier": "AA",
+            "comment": "Just take my money!"
+        }]
+
+        """
+        def post(self, request, format=None):
+            data = request.data[0]
+            comment = CarrierCommentSerializer(data=data)
+            try:
+                comment.is_valid()
+                comment.save()
+            except:
+                return HttpResponseBadRequest("Please give a proper comment dictionary")
+            return Response()
+
+        """
+        put:
+
+        Create or modify a comment based on an id.
+
+        example input - .../carriers/comments/
+
+        [{
+            "id": 2
+            "carrier": "AA",
+            "comment": "Just take my money!"
+        }]
+        """
+        def put(self, request, format=None):
+            data = request.data[0]
+            comment = CarrierComment.objects.filter(id=data["id"])
+            if len(comment) != 0:
+                comment.delete()
+            
+            new_comment = CarrierCommentSerializer(data=data)
+            try:
+                new_comment.is_valid()
+                new_comment.save()
+            except:
+                return HttpResponseBadRequest("Please give a proper comment dictionary")
+            return Response()
+
+        """
+        delete:
+
+        Delete an existing comment.
+
+        example input - .../carriers/comments/?id=2
+        """
+        def delete(self, request, format=None):
+            id = request.GET.get("id","")
+            try:
+                comment = CarrierComment.objects.get(id=id)
+                comment.delete()
+            except ObjectDoesNotExist:
+                return HttpResponseBadRequest("Please give a proper comment id")
+            
+            return Response()
+            
+
