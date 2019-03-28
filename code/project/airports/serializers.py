@@ -73,6 +73,13 @@ class StatisticsGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = StatisticsGroup
         fields = ('airport', 'carrier', 'statistics', 'time')
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=model.objects.all(),
+                fields=('airport', 'carrier', 'time'),
+                message=("Statistic already exists.")
+            )
+        ]
 
     def create(self, validated_data):
 
@@ -83,3 +90,5 @@ class StatisticsGroupSerializer(serializers.ModelSerializer):
         stats.statistics = StatisticsSerializer().create(validated_data.pop("statistics"))
         stats.save()
         return stats
+    
+    
