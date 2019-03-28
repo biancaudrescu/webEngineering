@@ -270,6 +270,8 @@ class FancyStatistics(APIView):
 
 class Rankings(APIView):
 
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
     def get(self, request, format=None):
         min_del_carrier = request.GET.get("mdc","0")
         min_del_late_air = request.GET.get("mdla","0")
@@ -362,8 +364,12 @@ class CommentView(APIView):
                 return HttpResponseBadRequest("Comment does not exist.")
         if carrier == "all":
             comments = CarrierComment.objects.all().values()
+            links = []
             for comment in comments:
-                comment["link"] = request.path+"?id="+str(comment["id"])
+                links.append(request.path+"?id="+str(comment["id"]))
+            comments = CarrierCommentSerializer(CarrierComment.objects.all(),many=True).data
+            for i in range(len(comments)):
+                comments[i]["link"] = links[i]
             return Response(comments)
 
         try:
