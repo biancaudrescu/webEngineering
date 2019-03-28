@@ -63,45 +63,43 @@ console.log(showData1.responseText);
         '                    <th>late aircraft avg</th>\n' +
         '                    <th>late aircraft median</th>\n' +
         '                    <th>late aircraft std</th></tr></thead><tbody>';
-    var k;
-    for (k in data1) {
-
+    
        table_body += '<tr id=k>';
  table_body += '<tr>';
 
         table_body += '<td>';
-        table_body += data1[k]["carrier"]["avg"];
+        table_body += data1["carrier"]["avg"];
         table_body += '</td>';
 
         table_body += '<td>';
-         table_body += data1[k]["carrier"]["median"];
-        table_body += '</td>';
-
-
-        table_body += '<td>';
-        table_body += data1[k]["carrier"]["std"];
+         table_body += data1["carrier"]["median"];
         table_body += '</td>';
 
 
         table_body += '<td>';
-         table_body += data1[k]["late_aircraft"]["avg"];
+        table_body += data1["carrier"]["std"];
         table_body += '</td>';
 
 
         table_body += '<td>';
-         table_body += data1[k]["late_aircraft"]["median"];
+         table_body += data1["late_aircraft"]["avg"];
         table_body += '</td>';
 
 
         table_body += '<td>';
-         table_body += data1[k]["late_aircraft"]["std"];
+         table_body += data1["late_aircraft"]["median"];
+        table_body += '</td>';
+
+
+        table_body += '<td>';
+         table_body += data1["late_aircraft"]["std"];
         table_body += '</td>';
 
 
         table_body += '</tr>';
         table_body += '</tr>';
 
-    }
+    
     table_body += '</tbody></table>';
     $('#myStatTable').html(table_body);
     $("#myStatTable").SetEditable({
@@ -135,42 +133,41 @@ $(document).ready(function () {
         '                    <th>late aircraft avg</th>\n' +
         '                    <th>late aircraft median</th>\n' +
         '                    <th>late aircraft std</th></tr></thead><tbody>';
-    for (k in data) {
-
+        table_body += '<tr id=k>';
         table_body += '<tr>';
-
-        table_body += '<td>';
-        table_body += data[k]["carrier"]["avg"];
-        table_body += '</td>';
-
-        table_body += '<td>';
-         table_body += data[k]["carrier"]["median"];
-        table_body += '</td>';
-
-
-        table_body += '<td>';
-        table_body += data[k]["carrier"]["std"];
-        table_body += '</td>';
-
-
-        table_body += '<td>';
-         table_body += data[k]["late_aircraft"]["avg"];
-        table_body += '</td>';
-
-
-        table_body += '<td>';
-         table_body += data[k]["late_aircraft"]["median"];
-        table_body += '</td>';
-
-
-        table_body += '<td>';
-         table_body += data[k]["late_aircraft"]["std"];
-        table_body += '</td>';
-
-
-        table_body += '</tr>';
-
-    }
+       
+               table_body += '<td>';
+               table_body += data["carrier"]["avg"];
+               table_body += '</td>';
+       
+               table_body += '<td>';
+                table_body += data["carrier"]["median"];
+               table_body += '</td>';
+       
+       
+               table_body += '<td>';
+               table_body += data["carrier"]["std"];
+               table_body += '</td>';
+       
+       
+               table_body += '<td>';
+                table_body += data["late_aircraft"]["avg"];
+               table_body += '</td>';
+       
+       
+               table_body += '<td>';
+                table_body += data["late_aircraft"]["median"];
+               table_body += '</td>';
+       
+       
+               table_body += '<td>';
+                table_body += data["late_aircraft"]["std"];
+               table_body += '</td>';
+       
+       
+               table_body += '</tr>';
+               table_body += '</tr>';
+       
     table_body += '</tbody></table>';
     $('#myStatTable').html(table_body);
 

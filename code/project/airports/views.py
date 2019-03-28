@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 
-import statistics
+from statistics import mean, median, stdev
 
 # Create your views here.
 from django.shortcuts import render
@@ -330,14 +330,14 @@ class FancyStatistics(APIView):
 
         description = {
             "carrier": {
-                "avg": statistics.mean(carrier_delays),
-                "median": statistics.median(carrier_delays),
-                "std": statistics.stdev(carrier_delays)
+                "avg": mean(carrier_delays),
+                "median": median(carrier_delays),
+                "std": stdev(carrier_delays)
             },
             "late_aircraft": {
-                "avg": statistics.mean(late_air_delays),
-                "median": statistics.median(late_air_delays),
-                "std": statistics.stdev(late_air_delays)
+                "avg": mean(late_air_delays),
+                "median": median(late_air_delays),
+                "std": stdev(late_air_delays)
             },
             "link": request.path+"?to="+to_a+"&carrier="+carrier
         }
