@@ -1,30 +1,98 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
-import json
-import csv
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
+
 import statistics
-import re
 
 # Create your views here.
-from rest_framework.renderers import JSONRenderer
+from django.shortcuts import render
 from rest_framework.settings import api_settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_csv import renderers as r
-from rest_framework import authentication, permissions
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 
-
+from airports.forms import *
 from airports.models import Airport, Carrier, Statistics, StatisticsGroup, Flights, NumDelays, CarrierComment
 from airports.serializers import AirportSerializer, CarrierSerializer, StatisticsGroupSerializer, CarrierCommentSerializer
 
 
+
+#Biancas shit
+def airports(request):
+    return render(request, "../templates/airports.html", {})
+
+def carriers(request):
+    return render(request, "../templates/carriers.html", {})
+
+
+def carriersRankings(request):
+    return render(request, "../templates/carriersrankings.html", {})
+
+
+def carriersComm(request):
+    return render(request, "../templates/carrierscomm.html", {})
+
+def statistics(request):
+    if request.method=='GET':
+        return render(request, "../templates/statistics.html", {})
+
+
+
+
+
+def statisticsPost(request):
+    if request.method == 'POST':
+        charForm1 = CharForm(request.POST)
+
+
+        formFlights= FlightsForm(request.POST)
+        formMin =minDelayForm(request.POST)
+        formNum = numDelayForm(request.POST)
+        if formNum.is_valid() and formFlights.is_valid() and formMin.is_valid() and charForm1.is_valid():
+            num = dict(formNum.cleaned_data)
+            min = dict(formMin.cleaned_data)
+            fli = dict(formFlights.cleaned_data)
+            identity = dict(charForm1.cleaned_data)
+            air = identity["airport_id"]
+            car = identity["carrier_id"]
+            tim = identity["time_id"]
+            print(air, car, tim)
+            stat = dict({"minutes_del": min, "num_del": num, "flights": fli})
+            statGroup = dict({"airport": air, "carrier": car, "statistics": stat, "time": tim})
+
+            stat = StatisticsGroupSerializer(data=statGroup)
+
+            if not stat.is_valid():
+                return HttpResponseRedirect("./")
+
+            stat.save()
+
+    else:
+        charForm1 = CharForm()
+
+        formFlights = FlightsForm()
+        formMin= minDelayForm()
+        formNum = numDelayForm()
+
+    return render(request, "../templates/post.html", {'forma': charForm1,'form1':formFlights,'form2':formMin,'form3':formNum})
+
+
+
+def statisticsMinutes(request):
+    return render(request, "../templates/statisticsminutes.html", {})
+
+
+def statisticsDelays(request):
+    return render(request, "../templates/statisticsdelays.html", {})
+
+
+def statisticsDescription(request):
+    return render(request, "../templates/statisticsdescription.html", {})
+
+
+#Jakobs shit
 class ListAirports(APIView):
     
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
@@ -89,14 +157,18 @@ class AllStatistics(APIView):
             return HttpResponseBadRequest("Please specify an airport and carrier code")
         month_year = request.GET.get('month_year','all')
         stats = StatisticsGroup.objects.filter(airport=airport_code,carrier=carrier_code)
+        if len(stats) == 0:
+            return Response(list())
         if month_year == 'all':
             res_data = StatisticsGroupSerializer(stats,many=True).data
             for stat in res_data:
                 stat["link"] = request.path+"?c_code="+stat["carrier"]+"&month_year="+stat["time"]
             return Response(res_data)
         stats = stats.filter(time=month_year)
+        if len(stats) == 0:
+            return Response(list())
         stats = StatisticsGroupSerializer(stats,many=True).data
-        stats[0]["link"] = request.path+"?c_code="+stat[0]["carrier"]+"&month_year="+stat[0]["time"]
+        stats[0]["link"] = request.path+"?c_code="+stats[0]["carrier"]+"&month_year="+stats[0]["time"]
         return Response(stats)
 
     def post(self, request, airport_code, format=None):
@@ -188,7 +260,11 @@ class DelayStatistics(APIView):
         month_year = request.GET.get('month_year', 'all')
         reason = request.GET.get('reason', 'all')
 
-        stats = StatisticsGroup.objects.filter(airport=airport_code, carrier=carrier_code)
+        if airport_code != "ALL":
+            stats = StatisticsGroup.objects.filter(airport=airport_code, carrier=carrier_code)
+        else:
+            stats = StatisticsGroup.objects.filter(carrier=carrier_code)
+
         if month_year != 'all':
             stats = stats.filter(time=month_year)
         stats = stats.values()
@@ -380,6 +456,8 @@ class CommentView(APIView):
         comments = CarrierComment.objects.filter(carrier=carrier).values()
         for comment in comments:
             comment["link"] = request.path+"?id="+str(comment["id"])
+            comment["carrier"] = comment["carrier_id"]
+            del comment["carrier_id"]
         return Response(comments)
     
     def post(self, request, format=None):
