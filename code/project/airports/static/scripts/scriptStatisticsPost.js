@@ -1,5 +1,5 @@
 
-function post(){
+function deletion(){
 
 location.href = "./templates/post";
 
@@ -7,7 +7,7 @@ location.href = "./templates/post";
 }
 
 
-document.getElementById('but_add').onclick = post();
+document.getElementById('delete').onclick = deletion();
 
 
 

@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2ff75b0-57a2-4516-b6fe-bef14ed445c7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/airports/templates/delete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airports/static/scripts/scriptStatistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/airports/static/scripts/scriptStatistics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airports/static/scripts/scriptStatisticsPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/airports/static/scripts/scriptStatisticsPost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airports/templates/post.html" beforeDir="false" afterPath="$PROJECT_DIR$/airports/templates/post.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/airports/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/airports/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutorial/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutorial/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tutorial/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/tutorial/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/airports/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-804">
-              <caret line="266" lean-forward="true" selection-start-line="266" selection-end-line="266" />
+            <state relative-caret-position="495">
+              <caret line="108" column="47" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
               <folding>
                 <element signature="e#24#63#0" expanded="true" />
               </folding>
@@ -30,11 +33,38 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsminutes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="49" column="134" selection-start-line="49" selection-start-column="134" selection-end-line="49" selection-end-column="134" />
+            <state relative-caret-position="495">
+              <caret line="33" column="19" lean-forward="true" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsPost.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/airports/templates/post.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/airports/templates/delete.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -42,17 +72,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsDelays.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-645">
-              <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="98" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/airports/templates/statisticsdelays.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="134" column="37" selection-start-line="134" selection-start-column="37" selection-end-line="134" selection-end-column="37" />
+            <state relative-caret-position="-202">
+              <caret line="84" column="9" lean-forward="true" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -60,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatistics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="49" column="26" lean-forward="true" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
+            <state relative-caret-position="309">
+              <caret line="339" column="11" lean-forward="true" selection-start-line="339" selection-start-column="11" selection-end-line="339" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -76,19 +97,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/airports/templates/statisticsdescription.html">
+        <entry file="file://$PROJECT_DIR$/airports/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="644">
-              <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptCarriersRankings.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="80" selection-start-line="3" selection-start-column="80" selection-end-line="3" selection-end-column="80" />
+            <state relative-caret-position="-321">
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,20 +110,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tutorial/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+            <state relative-caret-position="615">
+              <caret line="41" column="83" selection-start-line="41" selection-start-column="83" selection-end-line="41" selection-end-column="83" />
               <folding>
                 <element signature="e#642#674#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptCarriersComm.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="58" column="43" selection-start-line="58" selection-start-column="43" selection-end-line="58" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -148,13 +153,16 @@
         <option value="$PROJECT_DIR$/airports/static/scripts/scriptCarriers.js" />
         <option value="$PROJECT_DIR$/airports/static/scripts/scriptCarriersRankings.js" />
         <option value="$PROJECT_DIR$/airports/static/scripts/scriptCarriersComm.js" />
-        <option value="$PROJECT_DIR$/airports/static/scripts/scriptStatistics.js" />
-        <option value="$PROJECT_DIR$/airports/views.py" />
         <option value="$PROJECT_DIR$/airports/templates/statisticsdelays.html" />
         <option value="$PROJECT_DIR$/airports/static/scripts/scriptStatisticsDelays.js" />
-        <option value="$PROJECT_DIR$/tutorial/urls.py" />
         <option value="$PROJECT_DIR$/airports/static/scripts/scriptStatisticsDescription.js" />
         <option value="$PROJECT_DIR$/airports/static/scripts/scriptStatisticsminutes.js" />
+        <option value="$PROJECT_DIR$/airports/static/scripts/scriptStatisticsPost.js" />
+        <option value="$PROJECT_DIR$/airports/static/scripts/scriptStatistics.js" />
+        <option value="$PROJECT_DIR$/airports/templates/post.html" />
+        <option value="$PROJECT_DIR$/airports/templates/delete.html" />
+        <option value="$PROJECT_DIR$/airports/views.py" />
+        <option value="$PROJECT_DIR$/tutorial/urls.py" />
       </list>
     </option>
   </component>
@@ -218,6 +226,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/airports/templates" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -296,12 +309,12 @@
       <updated>1553159671013</updated>
       <workItem from="1553159672990" duration="33543000" />
       <workItem from="1553247296334" duration="2970000" />
-      <workItem from="1553803897162" duration="5140000" />
+      <workItem from="1553803897162" duration="8306000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41653000" />
+    <option name="totallyTimeSpent" value="44819000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="943" extended-state="6" />
@@ -439,15 +452,6 @@
     <entry file="file://$PROJECT_DIR$/tutorial/wsgi.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/airports/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/airports/templates/carriers.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
@@ -461,9 +465,6 @@
           <caret line="38" column="12" lean-forward="true" selection-start-line="31" selection-start-column="4" selection-end-line="38" selection-end-column="12" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/airports/templates/post.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/airports/templates/carrierscomm.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -528,13 +529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatistics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="49" column="26" lean-forward="true" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/airports/templates/statisticsdelays.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -549,13 +543,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/airports/views.py">
+    <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsminutes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-804">
-          <caret line="266" lean-forward="true" selection-start-line="266" selection-end-line="266" />
-          <folding>
-            <element signature="e#24#63#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="495">
+          <caret line="33" column="19" lean-forward="true" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsDelays.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-202">
+          <caret line="84" column="9" lean-forward="true" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatistics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="339" column="11" lean-forward="true" selection-start-line="339" selection-start-column="11" selection-end-line="339" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -566,27 +571,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsPost.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/airports/templates/post.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/airports/templates/delete.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/airports/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-321">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tutorial/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="615">
+          <caret line="41" column="83" selection-start-line="41" selection-start-column="83" selection-end-line="41" selection-end-column="83" />
           <folding>
             <element signature="e#642#674#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsDelays.js">
+    <entry file="file://$PROJECT_DIR$/airports/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-645">
-          <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/airports/static/scripts/scriptStatisticsminutes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="49" column="134" selection-start-line="49" selection-start-column="134" selection-end-line="49" selection-end-column="134" />
+        <state relative-caret-position="495">
+          <caret line="108" column="47" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

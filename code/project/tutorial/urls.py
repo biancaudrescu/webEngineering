@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^web/statistics/post$', views.statisticsPost, name='statisticsPost'),
     url(r'^web/statistics/flights/$', views.statisticsMinutes, name='statisticsMinutes'),
     url(r'^web/statistics/delays/$', views.statisticsDelays, name='statisticsDelays'),
+    url(r'^web/statistics/delete/$', views.statisticsDelete, name='statisticsDelete'),
     url(r'^web/statistics/description/$', views.statisticsDescription, name='statisticsDescription')
 
 ]

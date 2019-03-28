@@ -79,6 +79,36 @@ def statisticsPost(request):
     return render(request, "../templates/post.html", {'forma': charForm1,'form1':formFlights,'form2':formMin,'form3':formNum})
 
 
+def statisticsDelete(request):
+    if request.method == 'POST':
+        charForm1 = CharForm(request.POST)
+
+        if  charForm1.is_valid():
+
+            identity = dict(charForm1.cleaned_data)
+            air = identity["airport_id"]
+            car = identity["carrier_id"]
+            tim = identity["time_id"]
+            try:
+                obj = StatisticsGroup.objects.get(airport=air,carrier=car,time=tim)
+                obj.delete()
+            except:
+                return HttpResponseRedirect('./')
+
+            return  HttpResponseRedirect('./')
+
+        return HttpResponseRedirect('./')
+
+    else:
+        charForm1 = CharForm()
+
+        formFlights = FlightsForm()
+        formMin= minDelayForm()
+        formNum = numDelayForm()
+
+    return render(request, "../templates/delete.html", {'forma': charForm1,'form1':formFlights,'form2':formMin,'form3':formNum})
+
+
 
 def statisticsMinutes(request):
     return render(request, "../templates/statisticsminutes.html", {})

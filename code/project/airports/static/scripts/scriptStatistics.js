@@ -166,7 +166,17 @@ console.log(showData1.responseText);
         table_body += data1[k]["statistics"]["minutes_del"]["nat_avi_sys"];
         table_body += '</td>';
 
-        table_body += '<button id=k>B1</button>'
+        airport=data[k]["airport"];
+        carrier=data[k]["carrier"];
+        time=data[k]["time"];
+
+        final=airport+carrier+time
+
+
+        table_body += '<td>';
+        table_body += '<button id="'+final+'" value="'+final+'" onclick="deletion(this)">delete</button>'
+        table_body += '</td>';
+
         table_body += '</tr>';
 
     }
@@ -299,6 +309,17 @@ $(document).ready(function () {
         table_body += data[k]["statistics"]["minutes_del"]["nat_avi_sys"];
         table_body += '</td>';
 
+        airport=data[k]["airport"];
+        carrier=data[k]["carrier"];
+        time=data[k]["time"];
+
+        final=airport+carrier+time
+
+        console.log(data[k])
+
+        table_body += '<td>';
+        table_body += '<button id="'+final+'" value="'+final+'" onclick="deletion(this)">delete</button>'
+        table_body += '</td>';
 
         table_body += '</tr>';
 
@@ -333,4 +354,13 @@ $(document).ready(function () {
 
 
 
+function deletion(lm){
+
+console.log(lm.value);
+console.log(lm.id);
+
+
+
+
+}
 
