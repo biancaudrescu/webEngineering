@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <title>Airports</title>
+                                                         </head>
+<body>
+<div class="container">
+    <h1>Airports</h1>
+    <p class="sw-info">
+        
+        Version: <span class="sw-info-version">1.0.0</span>
+    </p>
+    <p></p>
+    
+    
+    <div id="sw-schemes" class="sw-default-value">
+        <span class="sw-default-value-header">Schemes:</span>
+        
+    </div>
+    
+        <h2 id="swagger--summary-no-tags">Summary</h2>
+        <table class="table table-bordered table-condensed swagger--summary">
+            <thead>
+            <tr>
+                <th>Path</th>
+                <th>Operation</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--airports-">/airports/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--airports--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Return list of Airports</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--airports--airport_id--">/airports/{airport_id}/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--airports--airport_id---get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns an airport object.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="4">
+                                <a href="#path--airports--airport_id--statistics-">/airports/{airport_id}/statistics/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--airports--airport_id--statistics--delete">DELETE</a>
+                        </td>
+                        <td>
+                            <p>Deletes existing statistics entry(ies).</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#operation--airports--airport_id--statistics--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns a list of statistics.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#operation--airports--airport_id--statistics--post">POST</a>
+                        </td>
+                        <td>
+                            <p>Post a new statistic.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#operation--airports--airport_id--statistics--put">PUT</a>
+                        </td>
+                        <td>
+                            <p>Update or put up a new statistic.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--airports--airport_id--statistics-delays-">/airports/{airport_id}/statistics/delays/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--airports--airport_id--statistics-delays--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns delay statistics.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--airports--airport_id--statistics-description-">/airports/{airport_id}/statistics/description/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--airports--airport_id--statistics-description--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns a description of statistics between two airports.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--airports--airport_id--statistics-flights-">/airports/{airport_id}/statistics/flights/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--airports--airport_id--statistics-flights--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns flight statistics</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--carriers-">/carriers/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--carriers--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns a list of carriers.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--carriers--carrier_id--">/carriers/{carrier_id}/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--carriers--carrier_id---get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns a carrier.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="4">
+                                <a href="#path--comments-">/comments/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--comments--delete">DELETE</a>
+                        </td>
+                        <td>
+                            <p>Delete an existing comment.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#operation--comments--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns a list of comments.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#operation--comments--post">POST</a>
+                        </td>
+                        <td>
+                            <p>Post a new comment.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#operation--comments--put">PUT</a>
+                        </td>
+                        <td>
+                            <p>Update an existing comment.</p>
+        
+                        </td>
+                    </tr>
+                    <tr>
+                            <td class="swagger--summary-path" rowspan="1">
+                                <a href="#path--rankings-">/rankings/</a>
+                            </td>
+                        <td>
+                            <a href="#operation--rankings--get">GET</a>
+                        </td>
+                        <td>
+                            <p>Returns a full list of rankings.</p>
+        
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    
+    
+    
+    <h2>Paths</h2>
+    
+        
+        <span id="path--airports-"></span>
+            <div id="operation--airports--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Return list of Airports</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/airports/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">application/json</span> <span class="label label-default">text/csv</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns a dictionary list or csv table of airports.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>[<br>    {<br>        "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"ATL"</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL"</span></span>,<br>        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Atlanta, GA: Hartsfield-Jackson Atlanta International"</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"BOS"</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/BOS"</span></span>,<br>        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Boston, MA: Logan International"</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"BWI"</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/BWI"</span></span>,<br>        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Baltimore, MD: Baltimore/Washington International Thurgood Marshall"</span><br>    </span>}<br>]</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>code,link,name<br><span class="hljs-constant">ATL</span>,<span class="hljs-regexp">/airports/</span><span class="hljs-constant">ATL</span>,<span class="hljs-string">"Atlanta, GA: Hartsfield-Jackson Atlanta International"</span><br><span class="hljs-constant">BOS</span>,<span class="hljs-regexp">/airports/</span><span class="hljs-constant">BOS</span>,<span class="hljs-string">"Boston, MA: Logan International"</span><br><span class="hljs-constant">BWI</span>,<span class="hljs-regexp">/airports/</span><span class="hljs-constant">BWI</span>,<span class="hljs-string">"Baltimore, MD: Baltimore/Washington International Thurgood Marshall"</span></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                            <section class="json-schema-array-items">
+                                                                                
+                                                                                <span class="json-property-type">object</span>
+                                                                                <span class="json-property-range" title="Value limits"></span>
+                                                                                
+                                                                                <div class="json-inner-schema">
+                                                                                    
+                                                                                </div>
+                                                                            </section>    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--airports--airport_id--"></span>
+            <div id="operation--airports--airport_id---get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns an airport object.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/airports/{airport_id}/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Returns an airport object with the corresponding code, name and URI.</p>
+            
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>The code of the airport.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">application/json</span> <span class="label label-default">text/csv</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns an airport object with the corresponding code, name and URI.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>{<br>    "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"ATL"</span></span>,<br>    "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/"</span></span>,<br>    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Atlanta, GA: Hartsfield-Jackson Atlanta International"</span><br></span>}</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre><span class="hljs-tag">code</span>,link,name<br>ATL,/airports/ATL/,<span class="hljs-string">"Atlanta, GA: Hartsfield-Jackson Atlanta International"</span><br></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--airports--airport_id--statistics-"></span>
+            <div id="operation--airports--airport_id--statistics--delete" class="swagger--panel-operation-delete panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Deletes existing statistics entry(ies).</div>
+                    <h3 class="panel-title"><span class="operation-name">DELETE</span> <strong>/airports/{airport_id}/statistics/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Deletes a single or multiple statistics entries.
+            The entries are specified by the path parameter for the airport,
+            the query parameter for the carrier and the optional parameter for the time.
+            If no time is provided, all statistics corresponding to the airport and carrier
+            are deleted.</p>
+            
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>Code of the airport for the statistics.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Code of the carrier for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                month_year
+                                            </td>
+                                            <td><p>Time label for the statistics (e.g. &#39;2003/6&#39;).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-204">
+                                        204 No Content
+                                    
+                                    </dt>
+                                    <dd class="sw-response-204">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Empty response. Signals the statistics are deleted.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+            <div id="operation--airports--airport_id--statistics--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns a list of statistics.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/airports/{airport_id}/statistics/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Returns a list of statistics objects, which contain flight, delay and minute statistics.
+            Each statistics object is uniquely identifiable by the airport, carrier and time combination.</p>
+            
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>Code of the airport for the statistics.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Code of the carrier for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                month_year
+                                            </td>
+                                            <td><p>Time label for the statistics (e.g. &#39;2003/6&#39;).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">application/json</span> <span class="label label-default">text/csv</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns either a csv or a list of dictionaries.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>[<br>    {<br>        "<span class="hljs-attribute">airport</span>": <span class="hljs-value"><span class="hljs-string">"ATL"</span></span>,<br>        "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-string">"AA"</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/statistics/?c_code=AA&amp;month_year=2009/6"</span></span>,<br>        "<span class="hljs-attribute">statistics</span>": <span class="hljs-value">{<br>            "<span class="hljs-attribute">flights</span>": <span class="hljs-value">{<br>                "<span class="hljs-attribute">cancelled</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,<br>                "<span class="hljs-attribute">delayed</span>": <span class="hljs-value"><span class="hljs-number">186</span></span>,<br>                "<span class="hljs-attribute">diverted</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,<br>                "<span class="hljs-attribute">on_time</span>": <span class="hljs-value"><span class="hljs-number">561</span></span>,<br>                "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">2</span><br>            </span>}</span>,<br>            "<span class="hljs-attribute">minutes_del</span>": <span class="hljs-value">{<br>                "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-number">1367</span></span>,<br>                "<span class="hljs-attribute">late_aircraft</span>": <span class="hljs-value"><span class="hljs-number">1209</span></span>,<br>                "<span class="hljs-attribute">nat_avi_sys</span>": <span class="hljs-value"><span class="hljs-number">3817</span></span>,<br>                "<span class="hljs-attribute">security</span>": <span class="hljs-value"><span class="hljs-number">139</span></span>,<br>                "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">8314</span></span>,<br>                "<span class="hljs-attribute">weather</span>": <span class="hljs-value"><span class="hljs-number">1722</span><br>            </span>}</span>,<br>            "<span class="hljs-attribute">num_del</span>": <span class="hljs-value">{<br>                "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-number">34</span></span>,<br>                "<span class="hljs-attribute">late_aircraft</span>": <span class="hljs-value"><span class="hljs-number">18</span></span>,<br>                "<span class="hljs-attribute">nat_avi_sys</span>": <span class="hljs-value"><span class="hljs-number">105</span></span>,<br>                "<span class="hljs-attribute">security</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,<br>                "<span class="hljs-attribute">weather</span>": <span class="hljs-value"><span class="hljs-number">28</span><br>            </span>}<br>        </span>}</span>,<br>        "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"2009/6"</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">airport</span>": <span class="hljs-value"><span class="hljs-string">"ATL"</span></span>,<br>        "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-string">"AA"</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/statistics/?c_code=AA&amp;month_year=2003/6"</span></span>,<br>        "<span class="hljs-attribute">statistics</span>": <span class="hljs-value">{<br>            "<span class="hljs-attribute">flights</span>": <span class="hljs-value">{<br>                "<span class="hljs-attribute">cancelled</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,<br>                "<span class="hljs-attribute">delayed</span>": <span class="hljs-value"><span class="hljs-number">186</span></span>,<br>                "<span class="hljs-attribute">diverted</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,<br>                "<span class="hljs-attribute">on_time</span>": <span class="hljs-value"><span class="hljs-number">561</span></span>,<br>                "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">2</span><br>            </span>}</span>,<br>            "<span class="hljs-attribute">minutes_del</span>": <span class="hljs-value">{<br>                "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-number">1367</span></span>,<br>                "<span class="hljs-attribute">late_aircraft</span>": <span class="hljs-value"><span class="hljs-number">1209</span></span>,<br>                "<span class="hljs-attribute">nat_avi_sys</span>": <span class="hljs-value"><span class="hljs-number">3817</span></span>,<br>                "<span class="hljs-attribute">security</span>": <span class="hljs-value"><span class="hljs-number">139</span></span>,<br>                "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">8314</span></span>,<br>                "<span class="hljs-attribute">weather</span>": <span class="hljs-value"><span class="hljs-number">1722</span><br>            </span>}</span>,<br>            "<span class="hljs-attribute">num_del</span>": <span class="hljs-value">{<br>                "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-number">34</span></span>,<br>                "<span class="hljs-attribute">late_aircraft</span>": <span class="hljs-value"><span class="hljs-number">18</span></span>,<br>                "<span class="hljs-attribute">nat_avi_sys</span>": <span class="hljs-value"><span class="hljs-number">105</span></span>,<br>                "<span class="hljs-attribute">security</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,<br>                "<span class="hljs-attribute">weather</span>": <span class="hljs-value"><span class="hljs-number">28</span><br>            </span>}<br>        </span>}</span>,<br>        "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"2003/6"</span><br>    </span>}<br>]</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>airport,carrier,link,statistics.flights.cancelled,statistics.flights.delayed,statistics.flights.diverted,statistics.flights.on_time,statistics.flights.total,statistics.minutes_del.carrier,statistics.minutes_del.late_aircraft,statistics.minutes_del.nat_avi_sys,statistics.minutes_del.security,statistics.minutes_del.total,statistics.minutes_del.weather,statistics.num_del.carrier,statistics.num_del.late_aircraft,statistics.num_del.nat_avi_sys,statistics.num_del.security,statistics.num_del.weather,time<br>ATL,AA,/airports/ATL/statistics/?c_code=AA&amp;month_year=<span class="hljs-number">2009</span>/<span class="hljs-number">6</span>,<span class="hljs-number">5</span>,<span class="hljs-number">186</span>,<span class="hljs-number">0</span>,<span class="hljs-number">561</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1367</span>,<span class="hljs-number">1209</span>,<span class="hljs-number">3817</span>,<span class="hljs-number">139</span>,<span class="hljs-number">8314</span>,<span class="hljs-number">1722</span>,<span class="hljs-number">34</span>,<span class="hljs-number">18</span>,<span class="hljs-number">105</span>,<span class="hljs-number">2</span>,<span class="hljs-number">28</span>,<span class="hljs-number">2009</span>/<span class="hljs-number">6</span><br>ATL,AA,/airports/ATL/statistics/?c_code=AA&amp;month_year=<span class="hljs-number">2003</span>/<span class="hljs-number">6</span>,<span class="hljs-number">5</span>,<span class="hljs-number">186</span>,<span class="hljs-number">0</span>,<span class="hljs-number">561</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1367</span>,<span class="hljs-number">1209</span>,<span class="hljs-number">3817</span>,<span class="hljs-number">139</span>,<span class="hljs-number">8314</span>,<span class="hljs-number">1722</span>,<span class="hljs-number">34</span>,<span class="hljs-number">18</span>,<span class="hljs-number">105</span>,<span class="hljs-number">2</span>,<span class="hljs-number">28</span>,<span class="hljs-number">2003</span>/<span class="hljs-number">6</span><br></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+            <div id="operation--airports--airport_id--statistics--post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Post a new statistic.</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/airports/{airport_id}/statistics/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Each statistic is uniquely identifiable by the airport, carrier and time label.
+            The statistic must contain all of the required fields.
+            If the statistic has the same unique identifiers as an already existing statistic,
+            it will not be stored (use PUT instead).
+            The query parameters as well as path parameters are not important here!</p>
+            
+                    </section>
+            
+                        
+                            <section class="sw-request-body">
+                                
+                                    <p><span class="label label-default">application/json</span> 
+                        </p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><p>Request body must be a proper statistics dictionary enclosed in square brackets.</p>
+                        <p>Example:</p>
+                        <p>[
+                            {
+                                &quot;airport&quot;: &quot;ATL&quot;,
+                                &quot;carrier&quot;: &quot;AA&quot;,
+                                &quot;statistics&quot;: {
+                                    &quot;minutes_del&quot;: {
+                                        &quot;late_aircraft&quot;: 1209,
+                                        &quot;weather&quot;: 1722,
+                                        &quot;carrier&quot;: 1367,
+                                        &quot;security&quot;: 139,
+                                        &quot;total&quot;: 8314,
+                                        &quot;nat_avi_sys&quot;: 3817
+                                    },
+                                    &quot;num_del&quot;: {
+                                        &quot;weather&quot;: 28,
+                                        &quot;security&quot;: 2,
+                                        &quot;late_aircraft&quot;: 18,
+                                        &quot;nat_avi_sys&quot;: 105,
+                                        &quot;carrier&quot;: 34
+                                    },
+                                    &quot;flights&quot;: {
+                                        &quot;cancelled&quot;: 5,
+                                        &quot;on_time&quot;: 561,
+                                        &quot;total&quot;: 2,
+                                        &quot;delayed&quot;: 186,
+                                        &quot;diverted&quot;: 0
+                                    }
+                                },
+                                &quot;time&quot;: &quot;2003/7&quot;
+                            }
+                        ]</p>
+                        </p>
+                                            </div>
+                                            <div class="col-md-6 sw-request-model">
+                            <div  class="panel panel-definition">
+                                <div class="panel-body">
+                                        
+                                                        <section class="json-schema-array-items">
+                                                            
+                                                            <span class="json-property-type">object</span>
+                                                            <span class="json-property-range" title="Value limits"></span>
+                                                            
+                                                            <div class="json-inner-schema">
+                                                                
+                                                            </div>
+                                                        </section>    </div>
+                            </div></div>
+                                        </div>
+                            </section>        
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Code of the carrier for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>Code of the airport for the statistics.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Code of the carrier for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                month_year
+                                            </td>
+                                            <td><p>Time label for the statistics (e.g. &#39;2003/6&#39;).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Empty response. Signals that the dictionary has been stored.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+            <div id="operation--airports--airport_id--statistics--put" class="swagger--panel-operation-put panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Update or put up a new statistic.</div>
+                    <h3 class="panel-title"><span class="operation-name">PUT</span> <strong>/airports/{airport_id}/statistics/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Updates or creates a new statistic.
+            The request body must contain the full statistic dictionary,
+            with all required fields.
+            The query parameters as well as path parameters are not important here!</p>
+            
+                    </section>
+            
+                        
+                            <section class="sw-request-body">
+                                
+                                    <p><span class="label label-default">application/json</span> 
+                        </p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><p>Request body must be a proper statistics dictionary enclosed in square brackets.</p>
+                        <p>Example:</p>
+                        <p>[
+                            {
+                                &quot;airport&quot;: &quot;ATL&quot;,
+                                &quot;carrier&quot;: &quot;AA&quot;,
+                                &quot;statistics&quot;: {
+                                    &quot;minutes_del&quot;: {
+                                        &quot;late_aircraft&quot;: 1209,
+                                        &quot;weather&quot;: 1722,
+                                        &quot;carrier&quot;: 1367,
+                                        &quot;security&quot;: 139,
+                                        &quot;total&quot;: 8314,
+                                        &quot;nat_avi_sys&quot;: 3817
+                                    },
+                                    &quot;num_del&quot;: {
+                                        &quot;weather&quot;: 28,
+                                        &quot;security&quot;: 2,
+                                        &quot;late_aircraft&quot;: 18,
+                                        &quot;nat_avi_sys&quot;: 105,
+                                        &quot;carrier&quot;: 34
+                                    },
+                                    &quot;flights&quot;: {
+                                        &quot;cancelled&quot;: 5,
+                                        &quot;on_time&quot;: 561,
+                                        &quot;total&quot;: 2,
+                                        &quot;delayed&quot;: 186,
+                                        &quot;diverted&quot;: 0
+                                    }
+                                },
+                                &quot;time&quot;: &quot;2003/7&quot;
+                            }
+                        ]</p>
+                        </p>
+                                            </div>
+                                            <div class="col-md-6 sw-request-model">
+                            <div  class="panel panel-definition">
+                                <div class="panel-body">
+                                        
+                                                        <section class="json-schema-array-items">
+                                                            
+                                                            <span class="json-property-type">object</span>
+                                                            <span class="json-property-range" title="Value limits"></span>
+                                                            
+                                                            <div class="json-inner-schema">
+                                                                
+                                                            </div>
+                                                        </section>    </div>
+                            </div></div>
+                                        </div>
+                            </section>        
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Code of the carrier for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>Code of the airport for the statistics.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Code of the carrier for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                month_year
+                                            </td>
+                                            <td><p>Time label for the statistics (e.g. &#39;2003/6&#39;).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Empty response. Signals the statistic has been updated or created.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--airports--airport_id--statistics-delays-"></span>
+            <div id="operation--airports--airport_id--statistics-delays--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns delay statistics.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/airports/{airport_id}/statistics/delays/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>Airport for the statistics.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Carrier code for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                month_year
+                                            </td>
+                                            <td><p>Time label for the statistics (e.g. &#39;2003/6&#39;).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/csv</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns a list of delay statistics.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>[<br>    {<br>        "<span class="hljs-attribute">delays</span>": <span class="hljs-value">{<br>            "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-number">34</span></span>,<br>            "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1012</span></span>,<br>            "<span class="hljs-attribute">late_aircraft</span>": <span class="hljs-value"><span class="hljs-number">18</span></span>,<br>            "<span class="hljs-attribute">nat_avi_sys</span>": <span class="hljs-value"><span class="hljs-number">105</span></span>,<br>            "<span class="hljs-attribute">security</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,<br>            "<span class="hljs-attribute">weather</span>": <span class="hljs-value"><span class="hljs-number">28</span><br>        </span>}</span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/statistics/delays/?c_code=AA&amp;month_year=2009/6"</span></span>,<br>        "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"2009/6"</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">delays</span>": <span class="hljs-value">{<br>            "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-number">34</span></span>,<br>            "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1018</span></span>,<br>            "<span class="hljs-attribute">late_aircraft</span>": <span class="hljs-value"><span class="hljs-number">18</span></span>,<br>            "<span class="hljs-attribute">nat_avi_sys</span>": <span class="hljs-value"><span class="hljs-number">105</span></span>,<br>            "<span class="hljs-attribute">security</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,<br>            "<span class="hljs-attribute">weather</span>": <span class="hljs-value"><span class="hljs-number">28</span><br>        </span>}</span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/statistics/delays/?c_code=AA&amp;month_year=2003/6"</span></span>,<br>        "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"2003/6"</span><br>    </span>}<br>]</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>delays.carrier,delays.id,delays.late_aircraft,delays.nat_avi_sys,delays.security,delays.weather,link,time<br><span class="hljs-number">34</span>,<span class="hljs-number">1012</span>,<span class="hljs-number">18</span>,<span class="hljs-number">105</span>,<span class="hljs-number">2</span>,<span class="hljs-number">28</span>,/airports/ATL/statistics/delays/?c_code=AA&amp;month_year=<span class="hljs-number">2009</span>/<span class="hljs-number">6</span>,<span class="hljs-number">2009</span>/<span class="hljs-number">6</span><br><span class="hljs-number">34</span>,<span class="hljs-number">1018</span>,<span class="hljs-number">18</span>,<span class="hljs-number">105</span>,<span class="hljs-number">2</span>,<span class="hljs-number">28</span>,/airports/ATL/statistics/delays/?c_code=AA&amp;month_year=<span class="hljs-number">2003</span>/<span class="hljs-number">6</span>,<span class="hljs-number">2003</span>/<span class="hljs-number">6</span><br></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--airports--airport_id--statistics-description-"></span>
+            <div id="operation--airports--airport_id--statistics-description--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns a description of statistics between two airports.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/airports/{airport_id}/statistics/description/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Returns a description of carrier statistics by calculating mean, median and standard deviations for carrier specific statistics.</p>
+            
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>Airport for the statistics.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                to
+                                            </td>
+                                            <td><p>Code of destination airport.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                carrier
+                                            </td>
+                                            <td><p>Code of a carrier for carrier specific statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/csv</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns a description of carrier statistics by calculating mean, median and standard deviations for carrier specific statistics.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>{<br>    "<span class="hljs-attribute">carrier</span>": <span class="hljs-value">{<br>        "<span class="hljs-attribute">avg</span>": <span class="hljs-value"><span class="hljs-number">64.02702702702703</span></span>,<br>        "<span class="hljs-attribute">median</span>": <span class="hljs-value"><span class="hljs-number">22</span></span>,<br>        "<span class="hljs-attribute">std</span>": <span class="hljs-value"><span class="hljs-number">124.03291354755459</span><br>    </span>}</span>,<br>    "<span class="hljs-attribute">late_aircraft</span>": <span class="hljs-value">{<br>        "<span class="hljs-attribute">avg</span>": <span class="hljs-value"><span class="hljs-number">88.71621621621621</span></span>,<br>        "<span class="hljs-attribute">median</span>": <span class="hljs-value"><span class="hljs-number">18</span></span>,<br>        "<span class="hljs-attribute">std</span>": <span class="hljs-value"><span class="hljs-number">164.3984901665721</span><br>    </span>}</span>,<br>    "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/statistics/description/?to=BOS&amp;carrier=all"</span><br></span>}</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>carrier.avg,carrier.median,carrier.<span class="hljs-built_in">std</span>,late_aircraft.avg,late_aircraft.median,late_aircraft.<span class="hljs-built_in">std</span>,link<br><span class="hljs-number">64.02702702702703</span>,<span class="hljs-number">22.0</span>,<span class="hljs-number">124.03291354755459</span>,<span class="hljs-number">88.71621621621621</span>,<span class="hljs-number">18.0</span>,<span class="hljs-number">164.3984901665721</span>,/airports/ATL/statistics/description/?to=BOS&amp;carrier=all<br></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--airports--airport_id--statistics-flights-"></span>
+            <div id="operation--airports--airport_id--statistics-flights--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns flight statistics</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/airports/{airport_id}/statistics/flights/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Returns statistics related to flights.</p>
+            
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                airport_id
+                                            </td>
+                                            <td><p>Airport for the statistics.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                c_code
+                                            </td>
+                                            <td><p>Carrier code for the statistics.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                month_year
+                                            </td>
+                                            <td><p>Time label for the statistics (e.g. &#39;2003/6&#39;).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/csv</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns a json list or csv table of flight specific statistics.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>[<br>    {<br>        "<span class="hljs-attribute">cancelled</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,<br>        "<span class="hljs-attribute">delayed</span>": <span class="hljs-value"><span class="hljs-number">186</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/statistics/flights/?c_code=AA&amp;month_year=2009/6"</span></span>,<br>        "<span class="hljs-attribute">on_time</span>": <span class="hljs-value"><span class="hljs-number">561</span></span>,<br>        "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"2009/6"</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">cancelled</span>": <span class="hljs-value"><span class="hljs-number">5</span></span>,<br>        "<span class="hljs-attribute">delayed</span>": <span class="hljs-value"><span class="hljs-number">186</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/airports/ATL/statistics/flights/?c_code=AA&amp;month_year=2003/6"</span></span>,<br>        "<span class="hljs-attribute">on_time</span>": <span class="hljs-value"><span class="hljs-number">561</span></span>,<br>        "<span class="hljs-attribute">time</span>": <span class="hljs-value"><span class="hljs-string">"2003/6"</span><br>    </span>}<br>]</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>cancelled,delayed,link,on_time,time<br><span class="hljs-number">5</span>,<span class="hljs-number">186</span>,/airports/ATL/statistics/flights/?c_code=AA&amp;month_year=<span class="hljs-number">2009</span>/<span class="hljs-number">6</span>,<span class="hljs-number">561</span>,<span class="hljs-number">2009</span>/<span class="hljs-number">6</span><br><span class="hljs-number">5</span>,<span class="hljs-number">186</span>,/airports/ATL/statistics/flights/?c_code=AA&amp;month_year=<span class="hljs-number">2003</span>/<span class="hljs-number">6</span>,<span class="hljs-number">561</span>,<span class="hljs-number">2003</span>/<span class="hljs-number">6</span><br></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--carriers-"></span>
+            <div id="operation--carriers--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns a list of carriers.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/carriers/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Returns a list of dictionaries of carriers working in US airports. Dictionaries contain carrier code, name and URI.</p>
+            
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                airport
+                                            </td>
+                                            <td><p>Give airport code to specify only carriers for this airport.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/csv</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns a list of dictionaries of carriers working in US airports. Dictionaries contain carrier code, name and URI.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>[<br>    {<br>        "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"AA"</span></span>,<br>        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"American Airlines Inc."</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/carriers/AA"</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"AS"</span></span>,<br>        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Alaska Airlines Inc."</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/carriers/AS"</span><br>    </span>}<br>}</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>code,link,name<br><span class="hljs-constant">AA</span>,<span class="hljs-regexp">/carriers/</span><span class="hljs-constant">AA</span>,<span class="hljs-constant">American</span> <span class="hljs-constant">Airlines</span> <span class="hljs-constant">Inc</span>.<br><span class="hljs-constant">AS</span>,<span class="hljs-regexp">/carriers/</span><span class="hljs-constant">AS</span>,<span class="hljs-constant">Alaska</span> <span class="hljs-constant">Airlines</span> <span class="hljs-constant">Inc</span>.<br><span class="hljs-constant">B6</span>,<span class="hljs-regexp">/carriers/</span><span class="hljs-constant">B6</span>,<span class="hljs-constant">JetBlue</span> <span class="hljs-constant">Airways</span></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--carriers--carrier_id--"></span>
+            <div id="operation--carriers--carrier_id---get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns a carrier.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/carriers/{carrier_id}/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                carrier_id
+                                            </td>
+                                            <td><p>Code of the carrier.</p>
+                                        </td>
+                                            <td>path</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/csv</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns either a json list or a csv table of carriers.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>{<br>    "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"AA"</span></span>,<br>    "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/carriers/AA/"</span></span>,<br>    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"American Airlines Inc."</span><br></span>}</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre><span class="hljs-tag">code</span>,link,name<br>AA,/carriers/AA/,American Airlines Inc.<br></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--comments-"></span>
+            <div id="operation--comments--delete" class="swagger--panel-operation-delete panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Delete an existing comment.</div>
+                    <h3 class="panel-title"><span class="operation-name">DELETE</span> <strong>/comments/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                id
+                                            </td>
+                                            <td><p>Id of a specific comment.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                id
+                                            </td>
+                                            <td><p>Id of a specific comment.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                carrier
+                                            </td>
+                                            <td><p>Code of a carrier to get comments for.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Empty response. Signals the comment was deleted.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+            <div id="operation--comments--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns a list of comments.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/comments/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                id
+                                            </td>
+                                            <td><p>Id of a specific comment.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                carrier
+                                            </td>
+                                            <td><p>Code of a carrier to get comments for.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/csv</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns either a json list or a table of comments. Each comment has a carrier code, the comment itself and a URI.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>[<br>    {<br>        "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-string">"AA"</span></span>,<br>        "<span class="hljs-attribute">comment</span>": <span class="hljs-value"><span class="hljs-string">"fsfdghdggasdfzrega"</span></span>,<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/comments/?id=13"</span><br>    </span>}<br>]</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>carrier,comment,link<br>AA,fsfdghdggasdfzrega,/comments/?<span class="hljs-property">id</span>=<span class="hljs-number">13</span><br></pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+            <div id="operation--comments--post" class="swagger--panel-operation-post panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Post a new comment.</div>
+                    <h3 class="panel-title"><span class="operation-name">POST</span> <strong>/comments/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Posts a new comment.</p>
+            
+                    </section>
+            
+                        
+                            <section class="sw-request-body">
+                                
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><p>Example:</p>
+                        <p>[
+                            {
+                                &quot;carrier&quot;: &quot;AA&quot;,
+                                &quot;comment&quot;: &quot;What a comment!&quot;
+                            }
+                        ]</p>
+                        </p>
+                                            </div>
+                                            <div class="col-md-6 sw-request-model">
+                            <div  class="panel panel-definition">
+                                <div class="panel-body">
+                                        
+                                </div>
+                            </div></div>
+                                        </div>
+                            </section>        
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                id
+                                            </td>
+                                            <td><p>Id of a specific comment.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                carrier
+                                            </td>
+                                            <td><p>Code of a carrier to get comments for.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Empty response. Means the comment was created and saved.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+            <div id="operation--comments--put" class="swagger--panel-operation-put panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Update an existing comment.</div>
+                    <h3 class="panel-title"><span class="operation-name">PUT</span> <strong>/comments/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Update a comment based on the id query parameter.</p>
+            
+                    </section>
+            
+                        
+                            <section class="sw-request-body">
+                                
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><p>Example:</p>
+                        <p>[{
+                            &quot;carrier&quot;: &quot;AA&quot;,
+                            &quot;comment&quot;: &quot;What a comment!&quot;
+                        }]</p>
+                        </p>
+                                            </div>
+                                            <div class="col-md-6 sw-request-model">
+                            <div  class="panel panel-definition">
+                                <div class="panel-body">
+                                        
+                                </div>
+                            </div></div>
+                                        </div>
+                            </section>        
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                id
+                                            </td>
+                                            <td><p>Id of a specific comment.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                id
+                                            </td>
+                                            <td><p>Id of a specific comment.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                carrier
+                                            </td>
+                                            <td><p>Code of a carrier to get comments for.</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Empty response. Means that the comment has been updated.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                            </div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        
+        <span id="path--rankings-"></span>
+            <div id="operation--rankings--get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns a full list of rankings.</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/rankings/</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Returns a list of dictionaries that contain a carrier code and the corresponding rankings for this carrier.</p>
+            
+                    </section>
+            
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                ndc
+                                            </td>
+                                            <td><p>Number of delays due to carrier reasons (0|1).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                ndla
+                                            </td>
+                                            <td><p>Number of delays due to late aircraft (0|1)</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                mdc
+                                            </td>
+                                            <td><p>Minutes of delays due to carrier reasons (0|1).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                mdla
+                                            </td>
+                                            <td><p>Minutes of delays due to late aircraft reasons (0|1).</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">text/csv</span> <span class="label label-default">application/json</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Returns a list of dictionaries that contain a carrier code and the corresponding rankings for this carrier.
+                                            The list also contains a URI to itself at the end.</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for application/json</div>
+                                                        <pre>[<br>    {<br>        "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-string">"EV"</span></span>,<br>        "<span class="hljs-attribute">min_del_carrier</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,<br>        "<span class="hljs-attribute">min_del_late_air</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,<br>        "<span class="hljs-attribute">num_del_carrier</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,<br>        "<span class="hljs-attribute">num_del_late_air</span>": <span class="hljs-value"><span class="hljs-number">0</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-string">"RU"</span></span>,<br>        "<span class="hljs-attribute">min_del_carrier</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>        "<span class="hljs-attribute">min_del_late_air</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>        "<span class="hljs-attribute">num_del_carrier</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,<br>        "<span class="hljs-attribute">num_del_late_air</span>": <span class="hljs-value"><span class="hljs-number">1</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">carrier</span>": <span class="hljs-value"><span class="hljs-string">"HP"</span></span>,<br>        "<span class="hljs-attribute">min_del_carrier</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,<br>        "<span class="hljs-attribute">min_del_late_air</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,<br>        "<span class="hljs-attribute">num_del_carrier</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>,<br>        "<span class="hljs-attribute">num_del_late_air</span>": <span class="hljs-value"><span class="hljs-number">2</span><br>    </span>},<br>    {<br>        "<span class="hljs-attribute">link</span>": <span class="hljs-value"><span class="hljs-string">"/rankings/?mdc=1&amp;mdla=1&amp;ndc=1&amp;ndla=1"</span><br>    </span>}<br>]</pre>
+                                                    </div>
+                                                    <div class="col-md-6 sw-response-examples">
+                                                        <div class="label label-default">Example for text/csv</div>
+                                                        <pre>carrier,link,min_del_carrier,min_del_late_air,num_del_carrier,num_del_late_air<br>EV,,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span><br>RU,,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span><br>HP,,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span><br>,/rankings/?mdc=<span class="hljs-number">1</span>&amp;mdla=<span class="hljs-number">1</span>&amp;ndc=<span class="hljs-number">1</span>&amp;ndla=<span class="hljs-number">1</span>,,,,</pre>
+                                                    </div>
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                            <section class="json-schema-array-items">
+                                                                                
+                                                                                <span class="json-property-type">object</span>
+                                                                                <span class="json-property-range" title="Value limits"></span>
+                                                                                
+                                                                                <div class="json-inner-schema">
+                                                                                    
+                                                                                </div>
+                                                                            </section>    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+    
+     
+    
+                       
+    
+</div>
+<script src="bundle.js" type="application/javascript"></script>
+</body>
+</html>
