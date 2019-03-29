@@ -14,33 +14,33 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
-
-
 from airports import views
-from rest_framework.documentation import include_docs_urls
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
-
-schema_view = get_schema_view(
-   openapi.Info(
-      title="Airports API",
-      default_version='v1',
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
-)
-
 
 urlpatterns = [
     url(r'^airports/$', views.ListAirports.as_view()),
+    url(r'^airports/(?P<airport_id>[\w]+)/$',views.RIAirportView.as_view()),
+
     url(r'^carriers/$', views.ListCarriers.as_view()),
-    url(r'^airports/(?P<airport_id>[\w]+)/carriers/', views.ListCarriersOfAirport.as_view()),
-    url(r'^statistics/$', views.AllStatistics.as_view()),
-    url(r'^statistics/flights/$', views.FlightsStatistics.as_view()),
-    url(r'^statistics/delays/$', views.DelayStatistics.as_view()),
-    url(r'^statistics/description/$', views.FancyStatistics.as_view()),
-    url(r'^docs/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+    url(r'^carriers/(?P<carrier_id>[\w]+)/$',views.RICarrierView.as_view()),
+
+    url(r'^airports/(?P<airport_code>[\w]+)/statistics/$', views.AllStatistics.as_view()),
+    url(r'^airports/(?P<airport_code>[\w]+)/statistics/flights/$', views.FlightsStatistics.as_view()),
+    url(r'^airports/(?P<airport_code>[\w]+)/statistics/delays/$', views.DelayStatistics.as_view()),
+    url(r'^airports/(?P<from_a>[\w]+)/statistics/description/$', views.FancyStatistics.as_view()),
+
+    url(r'^rankings/$',views.Rankings.as_view()),
+    url(r'^comments/$', views.CommentView.as_view()),
+
+    url(r'^web/airports/$', views.airports, name='airports'),
+    url(r'^web/carriers/$', views.carriers, name='carriers'),
+    url(r'^web/carriers/comments/$', views.carriersComm, name='carriersComm'),
+    url(r'^web/carriers/rankings/$', views.carriersRankings, name='carriersRankings'),
+    url(r'^web/statistics/$', views.statistics, name='statistics'),
+    url(r'^web/statistics/post$', views.statisticsPost, name='statisticsPost'),
+    url(r'^web/statistics/flights/$', views.statisticsMinutes, name='statisticsMinutes'),
+    url(r'^web/statistics/delays/$', views.statisticsDelays, name='statisticsDelays'),
+    url(r'^web/statistics/delete/$', views.statisticsDelete, name='statisticsDelete'),
+    url(r'^web/statistics/description/$', views.statisticsDescription, name='statisticsDescription')
+
 ]
 

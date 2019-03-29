@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from airports.models import Airport, Carrier, Statistics, Flights, NumDelays, MinutesDelayed, StatisticsGroup, Time
+from airports.models import Airport, Carrier, Statistics, Flights, NumDelays, MinutesDelayed, StatisticsGroup, Time, CarrierComment
 
 
 class AirportSerializer(serializers.ModelSerializer):
@@ -13,6 +13,12 @@ class CarrierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carrier
         fields = ('code', 'name')
+
+
+class CarrierCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarrierComment
+        fields = ('carrier', 'comment')
 
 
 class TimeSerializer(serializers.ModelSerializer):
@@ -62,13 +68,18 @@ class StatisticsSerializer(serializers.ModelSerializer):
 
 class StatisticsGroupSerializer(serializers.ModelSerializer):
 
-    # airport = AirportSerializer()
-    # carrier = CarrierSerializer()
     statistics = StatisticsSerializer()
 
     class Meta:
         model = StatisticsGroup
         fields = ('airport', 'carrier', 'statistics', 'time')
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=model.objects.all(),
+                fields=('airport', 'carrier', 'time'),
+                message=("Statistic already exists.")
+            )
+        ]
 
     def create(self, validated_data):
 
@@ -79,3 +90,5 @@ class StatisticsGroupSerializer(serializers.ModelSerializer):
         stats.statistics = StatisticsSerializer().create(validated_data.pop("statistics"))
         stats.save()
         return stats
+    
+    

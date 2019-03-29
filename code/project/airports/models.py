@@ -20,6 +20,11 @@ class Carrier(models.Model):
         return " \"name\":{}, \"code\": {}".format(self.name, self.code)
 
 
+class CarrierComment(models.Model):
+    carrier = models.ForeignKey(Carrier, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=300)
+
+
 class Time(models.Model):
     label = models.CharField(max_length=8,primary_key=True)
     year = models.IntegerField()

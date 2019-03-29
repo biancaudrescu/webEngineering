@@ -1,270 +1,263 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
-import json
-import csv
-import statistics
-import re
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
+
+from statistics import mean, median, stdev
 
 # Create your views here.
-from rest_framework.renderers import JSONRenderer
+from django.shortcuts import render
 from rest_framework.settings import api_settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_csv import renderers as r
-from rest_framework import authentication, permissions
-from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
-from airports.models import Airport, Carrier, Statistics, StatisticsGroup, Flights, NumDelays
-from airports.serializers import AirportSerializer, CarrierSerializer, StatisticsGroupSerializer
+from airports.forms import *
+from airports.models import Airport, Carrier, Statistics, StatisticsGroup, Flights, NumDelays, CarrierComment
+from airports.serializers import AirportSerializer, CarrierSerializer, StatisticsGroupSerializer, CarrierCommentSerializer
 
 
+
+#Biancas shit
+def airports(request):
+    return render(request, "../templates/airports.html", {})
+
+def carriers(request):
+    return render(request, "../templates/carriers.html", {})
+
+
+def carriersRankings(request):
+    return render(request, "../templates/carriersrankings.html", {})
+
+
+def carriersComm(request):
+    return render(request, "../templates/carrierscomm.html", {})
+
+def statistics(request):
+    if request.method=='GET':
+        return render(request, "../templates/statistics.html", {})
+
+
+
+
+
+def statisticsPost(request):
+    if request.method == 'POST':
+        charForm1 = CharForm(request.POST)
+
+
+        formFlights= FlightsForm(request.POST)
+        formMin =minDelayForm(request.POST)
+        formNum = numDelayForm(request.POST)
+        if formNum.is_valid() and formFlights.is_valid() and formMin.is_valid() and charForm1.is_valid():
+            num = dict(formNum.cleaned_data)
+            min = dict(formMin.cleaned_data)
+            fli = dict(formFlights.cleaned_data)
+            identity = dict(charForm1.cleaned_data)
+            air = identity["airport_id"]
+            car = identity["carrier_id"]
+            tim = identity["time_id"]
+            print(air, car, tim)
+            stat = dict({"minutes_del": min, "num_del": num, "flights": fli})
+            statGroup = dict({"airport": air, "carrier": car, "statistics": stat, "time": tim})
+
+            stat = StatisticsGroupSerializer(data=statGroup)
+
+            if not stat.is_valid():
+                return HttpResponseRedirect("./")
+
+            stat.save()
+
+    else:
+        charForm1 = CharForm()
+
+        formFlights = FlightsForm()
+        formMin= minDelayForm()
+        formNum = numDelayForm()
+
+    return render(request, "../templates/post.html", {'forma': charForm1,'form1':formFlights,'form2':formMin,'form3':formNum})
+
+
+def statisticsDelete(request):
+    if request.method == 'POST':
+        charForm1 = CharForm(request.POST)
+
+        if  charForm1.is_valid():
+
+            identity = dict(charForm1.cleaned_data)
+            air = identity["airport_id"]
+            car = identity["carrier_id"]
+            tim = identity["time_id"]
+            try:
+                obj = StatisticsGroup.objects.get(airport=air,carrier=car,time=tim)
+                obj.delete()
+            except:
+                return HttpResponseRedirect('./')
+
+            return  HttpResponseRedirect('./')
+
+        return HttpResponseRedirect('./')
+
+    else:
+        charForm1 = CharForm()
+
+        formFlights = FlightsForm()
+        formMin= minDelayForm()
+        formNum = numDelayForm()
+
+    return render(request, "../templates/delete.html", {'forma': charForm1,'form1':formFlights,'form2':formMin,'form3':formNum})
+
+
+
+def statisticsMinutes(request):
+    return render(request, "../templates/statisticsminutes.html", {})
+
+
+def statisticsDelays(request):
+    return render(request, "../templates/statisticsdelays.html", {})
+
+
+def statisticsDescription(request):
+    return render(request, "../templates/statisticsdescription.html", {})
+
+
+#Jakobs shit
 class ListAirports(APIView):
-    """
-    get:
-
-    List all airports in the US.
-
-    example output:
-    [
-    {
-        "code": "ATL",
-        "name": "Atlanta, GA: Hartsfield-Jackson Atlanta International"
-    },
-    {
-        "code": "BOS",
-        "name": "Boston, MA: Logan International"
-    },
-    .
-    .
-    .
-    ]
-    """
+    
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
     def get(self, request, format=None):
-        type = request.GET.get('type','')
         res_data = AirportSerializer(Airport.objects.all(),many=True).data
-        if type == 'csv':
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="airports.csv"'
-            writer = csv.writer(response)
-            writer.writerow(['code', 'name'])
-            for x in res_data:
-                writer.writerow([x['code'],x['name']])
-            return response
+        for airport in res_data:
+            airport["link"] = request.path+airport["code"]
         return Response(res_data)
 
-class ListCarriers(APIView):
-    """
-    get:
+class RIAirportView(APIView):
 
-    List all carriers in the US.
-
-    example output:
-    [
-    {
-        "code": "AA",
-        "name": "American Airlines Inc."
-    },
-    {
-        "code": "AS",
-        "name": "Alaska Airlines Inc."
-    },
-    .
-    .
-    .
-    ]
-    """
-    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
-
-    def get(self, request, format=None):
-        type = request.GET.get('type','')
-        res_data = CarrierSerializer(Carrier.objects.all(), many=True).data
-        if type == 'text/csv':
-            response = HttpResponse(content_type='csv')
-            response['Content-Disposition'] = 'attachment; filename="carriers.csv"'
-            writer = csv.writer(response)
-            writer.writerow(['code', 'name'])
-            for x in res_data:
-                writer.writerow([x['code'],x['name']])
-            return response
-        return Response(res_data)
-
-class ListCarriersOfAirport(APIView):
-    """
-    get:
-
-    List all carriers for a specific airport.
-
-    input format - .../airports/<airport_code>/carriers/
-
-    example input - .../airports/ATL/carriers/
-
-    example output:
-    [
-    {
-        "code": "B6",
-        "name": "JetBlue Airways"
-    },
-    {
-        "code": "CO",
-        "name": "Continental Air Lines Inc."
-    },
-    .
-    .
-    .
-    ]
-    """
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
     def get(self, request, airport_id, format=None):
-        stats = StatisticsGroup.objects.filter(airport=airport_id)
-        carrier_codes = stats.values_list('carrier',flat=True).distinct()
-        list = []
-        for code in carrier_codes:
-            list.append(CarrierSerializer(Carrier.objects.get(code=code)).data)
-        return Response(list)
+        airport = AirportSerializer(Airport.objects.get(code=airport_id)).data
+        airport["link"] = request.path
+        return Response(airport)
 
-class AllStatistics(APIView):
-    """
-    get:
-
-    List full statistics for a specific airport, carrier and time.
-
-    example input - .../statistics/?a_code=ATL&c_code=AA?month_year=2003/6
-
-    example output:
-    [
-    {
-        "airport": "ATL",
-        "carrier": "AA",
-        "statistics": {
-            "minutes_del": {
-                "late_aircraft": 1269,
-                "weather": 1722,
-                "carrier": 1367,
-                "security": 139,
-                "total": 8314,
-                "nat_avi_sys": 3817
-            },
-            "num_del": {
-                "weather": 28,
-                "security": 2,
-                "late_aircraft": 18,
-                "nat_avi_sys": 105,
-                "carrier": 34
-            },
-            "flights": {
-                "cancelled": 5,
-                "on_time": 561,
-                "total": 752,
-                "delayed": 186,
-                "diverted": 0
-            }
-        },
-        "time": "2003/6"
-    }
-    ]
-
-    post:
-
-    Insert new statistics. Body is the same as the example output for GET.
-
-    put:
-
-    Modify statistics. Body is the same as in POST.
-
-    delete:
-
-    Delete a statistics entry. Url is the same as in the GET method.
-
-
-    """
+class ListCarriers(APIView):
+    
 
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
     def get(self, request, format=None):
-        airport_code = request.GET.get('a_code','')
+
+        airport = request.GET.get("airport","")
+        if airport != "":
+            stats = StatisticsGroup.objects.filter(airport=airport)
+            if len(stats) == 0:
+                return HttpResponseBadRequest("Please specify a proper airport.")
+            carrier_codes = stats.values_list('carrier',flat=True).distinct()
+            carriers = []
+            for code in carrier_codes:
+                carriers.append(CarrierSerializer(Carrier.objects.get(code=code)).data)
+            for carrier in carriers:
+                carrier["link"] = request.path+carrier["code"]
+            return Response(carriers)
+
+        res_data = CarrierSerializer(Carrier.objects.all(), many=True).data
+        for carrier in res_data:
+            carrier["link"] = request.path+carrier["code"]
+        return Response(res_data)
+
+class RICarrierView(APIView):
+
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
+    def get(self, request, carrier_id, format=None):
+        carrier = CarrierSerializer(Carrier.objects.get(code=carrier_id)).data
+        carrier["link"] = request.path
+        return Response(carrier)
+
+class AllStatistics(APIView):
+    
+
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
+    def get(self, request, airport_code, format=None):
         carrier_code = request.GET.get('c_code','')
         if airport_code == '' or carrier_code == '':
             return HttpResponseBadRequest("Please specify an airport and carrier code")
         month_year = request.GET.get('month_year','all')
         stats = StatisticsGroup.objects.filter(airport=airport_code,carrier=carrier_code)
+        if len(stats) == 0:
+            return Response(list())
         if month_year == 'all':
-            return Response(StatisticsGroupSerializer(stats,many=True).data)
+            res_data = StatisticsGroupSerializer(stats,many=True).data
+            for stat in res_data:
+                stat["link"] = request.path+"?c_code="+stat["carrier"]+"&month_year="+stat["time"]
+            return Response(res_data)
         stats = stats.filter(time=month_year)
-        return Response(StatisticsGroupSerializer(stats,many=True).data)
+        if len(stats) == 0:
+            return Response(list())
+        stats = StatisticsGroupSerializer(stats,many=True).data
+        stats[0]["link"] = request.path+"?c_code="+stats[0]["carrier"]+"&month_year="+stats[0]["time"]
+        return Response(stats)
 
-    def post(self, request, format=None):
+    def post(self, request, airport_code, format=None):
         stat_data = request.data
         stat = StatisticsGroupSerializer(data=stat_data,many=True)
+        
+        if stat.is_valid():
+            print(stat.save())
+            return Response()
 
+        return HttpResponseBadRequest("Please give a proper statistics dictionary that doesn't already exist.")
+
+
+    def put(self, request, airport_code, format=None):
         try:
-            stat.is_valid()
-            stat.save()
+            stat_data = request.data[0]
         except:
-            return HttpResponseBadRequest("Please give a proper statistics dictionary")
-
-        return Response()
-
-    def put(self, request, format=None):
-        stat_data = request.data[0]
+            return HttpResponseBadRequest("Please give a proper dictionary enclosed in square brackets.")
         airport = stat_data["airport"]
         carrier = stat_data["carrier"]
         month_year = stat_data["time"]
 
         stats = StatisticsGroupSerializer(data=request.data, many=True)
-        try:
-            stats.is_valid()
-        except:
-            return HttpResponseBadRequest("Please give a proper statistics dictionary")
         stats2 = StatisticsGroup.objects.filter(airport=airport, carrier=carrier, time=month_year)
+        stats2_data = StatisticsGroupSerializer(stats2,many=True)
         if len(stats2) == 1:
             stats2.first().delete()
+        
+        if not stats.is_valid():
+            stats2=StatisticsGroupSerializer(data=stats2_data,many=True)
+            stats2.is_valid()
+            stats2.save()
+            return HttpResponseBadRequest("Please give a proper statistics dictionary")
         stats.save()
 
         return Response()
 
-    def delete(self, request, format=None):
-        airport_code = request.GET.get('a_code', '')
+    def delete(self, request, airport_code, format=None):
         carrier_code = request.GET.get('c_code', '')
         month_year = request.GET.get('month_year', 'all')
         if airport_code == '' or carrier_code == '':
             return HttpResponseBadRequest("Please specify an airport and carrier code")
         stats = StatisticsGroup.objects.filter(airport=airport_code, carrier=carrier_code)
+        if len(stats) == 0:
+            return HttpResponseBadRequest("No statistics found for given airport and carrier, please check that you're giving proper airport and carrier codes.")
         if month_year == 'all':
             stats.delete()
             return Response()
-        stats.filter(time=month_year).delete()
+        stats = stats.filter(time=month_year)
+        if len(stats) == 0:
+            return HttpResponseBadRequest("No statistics found for given time for this airport and carrier.")
+        stats.delete()
         return Response()
 
 class FlightsStatistics(APIView):
 
-    """
-    get:
-
-    Return statistics specific to flights.
-
-    example input - .../statistics/flights/?a_code=ATL&c_code=AA&month_year=2003/6
-
-    example output:
-    [
-    {
-        "cancelled": 5,
-        "delayed": 186,
-        "on_time": 561,
-        "time": "2003/6"
-    }
-    ]
-    """
-
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
-    def get(self, request, format=None):
-        airport_code = request.GET.get('a_code', '')
+    def get(self, request, airport_code, format=None):
         carrier_code = request.GET.get('c_code', '')
         month_year = request.GET.get('month_year', 'all')
         if airport_code == '' or carrier_code == '':
@@ -281,59 +274,27 @@ class FlightsStatistics(APIView):
                 "on_time": flights["on_time"],
                 "delayed": flights["delayed"],
                 "cancelled": flights["cancelled"],
-                "time": stat["time_id"]
+                "time": stat["time_id"],
+                "link": request.path+"?c_code="+carrier_code+"&month_year="+stat["time_id"]
             })
         return Response(list)
 
 class DelayStatistics(APIView):
 
-    """
-    get:
-
-    Return statistics specific to all or carrier delays. Reason can be 'carrier' or 'all'.
-
-    example input - .../statistics/flights/?a_code=ATL&c_code=AA&month_year=2003/6
-
-    example output:
-
-    [
-    {
-        "delays": {
-            "nat_avi_sys": 105,
-            "late_aircraft": 18,
-            "weather": 28,
-            "carrier": 34,
-            "security": 2,
-            "id": 203
-        },
-        "time": "2003/6"
-    }
-    ]
-
-    example input - .../statistics/flights/?a_code=ATL&c_code=AA&month_year=2003/6&reason=carrier
-
-    example output:
-
-    [
-    {
-        "late_airport": 18,
-        "carrier": 34,
-        "time": "2003/6"
-    }
-    ]
-    """
-
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
-    def get(self, request, format=None):
-        airport_code = request.GET.get('a_code', '')
+    def get(self, request, airport_code, format=None):
         carrier_code = request.GET.get('c_code', '')
         if airport_code == '' or carrier_code == '':
             return HttpResponseBadRequest("Please specify an airport and carrier code")
         month_year = request.GET.get('month_year', 'all')
         reason = request.GET.get('reason', 'all')
 
-        stats = StatisticsGroup.objects.filter(airport=airport_code, carrier=carrier_code)
+        if airport_code != "ALL":
+            stats = StatisticsGroup.objects.filter(airport=airport_code, carrier=carrier_code)
+        else:
+            stats = StatisticsGroup.objects.filter(carrier=carrier_code)
+
         if month_year != 'all':
             stats = stats.filter(time=month_year)
         stats = stats.values()
@@ -345,71 +306,46 @@ class DelayStatistics(APIView):
                 list.append({
                     "carrier": num_del["carrier"],
                     "late_airport": num_del["late_aircraft"],
-                    "time": stat["time_id"]
+                    "time": stat["time_id"],
+                    "link": request.path+"?c_code="+carrier_code+"&month_year="+stat["time_id"]
+
                 })
             else:
                 num_del.pop('_state')
                 list.append({
                     "delays": num_del,
-                    "time": stat["time_id"]
+                    "time": stat["time_id"],
+                    "link": request.path+"?c_code="+carrier_code+"&month_year="+stat["time_id"]
+
                 })
         return Response(list)
 
 class FancyStatistics(APIView):
-    """
-    get:
-
-    List mean, median, standard deviation for all carrier related flight delays between two airports for a specific carrier or all carriers.
-
-    example input - http://localhost:8000/statistics/description/?from=ATL&to=BOS
-
-    example output:
-
-    {
-    "late_aircraft": {
-        "std": 148.34847906813897,
-        "avg": 87.72222222222223,
-        "median": 17.5
-    },
-    "carrier": {
-        "std": 122.17404279152811,
-        "avg": 69.44444444444444,
-        "median": 26.5
-    }
-    }
-
-    example input - http://localhost:8000/statistics/description/?from=ATL&to=BOS&carrier=AA
-    example output:
-
-    {
-    "late_aircraft": {
-        "std": 19.79898987322333,
-        "avg": 32,
-        "median": 32
-    },
-    "carrier": {
-        "std": 24.748737341529164,
-        "avg": 51.5,
-        "median": 51.5
-    }
-    }
-    """
+    
     renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
 
-    def get(self, request, format=None):
-        from_a = request.GET.get('from', '')
+    def get(self, request, from_a, format=None):
         to_a = request.GET.get('to', '')
         carrier = request.GET.get('carrier', 'all')
         if from_a == '' or to_a == '':
-            return HttpResponseBadRequest("Please specify a 'from' airport and a 'to' airport")
-        from_stats = []
-        to_stats = []
-        if carrier == 'all':
-            from_stats = StatisticsGroupSerializer(StatisticsGroup.objects.filter(airport=from_a),many=True).data
-            to_stats = StatisticsGroupSerializer(StatisticsGroup.objects.filter(airport=to_a),many=True).data
-        else:
-            from_stats = StatisticsGroupSerializer(StatisticsGroup.objects.filter(airport=from_a,carrier=carrier), many=True).data
-            to_stats = StatisticsGroupSerializer(StatisticsGroup.objects.filter(airport=to_a,carrier=carrier), many=True).data
+            return HttpResponseBadRequest("Please specify a 'to' airport as a query parameter.")
+
+        from_stats = StatisticsGroup.objects.filter(airport=from_a)
+        to_stats = StatisticsGroup.objects.filter(airport=to_a)
+        if len(from_stats) == 0:
+            return HttpResponseBadRequest("Outgoing airport doesn't exist or has no statistics.")
+        if len(to_stats) == 0:
+            return HttpResponseBadRequest("Destination airport doesn't exist or has no statistics.")
+        
+        if carrier != 'all':
+            from_stats = from_stats.filter(carrier=carrier)
+            to_stats = to_stats.filter(carrier=carrier)
+            if len(from_stats) == 0 and len(to_stats) == 0:
+                return HttpResponseBadRequest("Specified carrier has no statistics or doesn't exit.")
+
+        from_stats = StatisticsGroupSerializer(from_stats,many=True).data
+        to_stats = StatisticsGroupSerializer(to_stats,many=True).data
+
         carrier_delays = []
         late_air_delays = []
         for stat in from_stats:
@@ -424,15 +360,180 @@ class FancyStatistics(APIView):
 
         description = {
             "carrier": {
-                "avg": statistics.mean(carrier_delays),
-                "median": statistics.median(carrier_delays),
-                "std": statistics.stdev(carrier_delays)
+                "avg": mean(carrier_delays),
+                "median": median(carrier_delays),
+                "std": stdev(carrier_delays)
             },
             "late_aircraft": {
-                "avg": statistics.mean(late_air_delays),
-                "median": statistics.median(late_air_delays),
-                "std": statistics.stdev(late_air_delays)
-            }
+                "avg": mean(late_air_delays),
+                "median": median(late_air_delays),
+                "std": stdev(late_air_delays)
+            },
+            "link": request.path+"?to="+to_a+"&carrier="+carrier
         }
 
         return Response(description)
+
+class Rankings(APIView):
+
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
+    def get(self, request, format=None):
+        min_del_carrier = request.GET.get("mdc","0")
+        min_del_late_air = request.GET.get("mdla","0")
+        num_del_carrier = request.GET.get("ndc","0")
+        num_del_late_air = request.GET.get("ndla","0")
+
+        if min_del_carrier == "0" and min_del_late_air == "0" and num_del_carrier == "0" and num_del_late_air == "0":
+            return HttpResponseBadRequest("Please specify at least one ranking criterion in the query parameters (mdc=1, mdla=1, ndc=1 or ndla=1).")
+        carriers = CarrierSerializer(Carrier.objects.all(),many=True).data
+        stats = StatisticsGroupSerializer(StatisticsGroup.objects.all(),many=True).data
+        output = []
+        for x in carriers:
+            x_out = dict({"carrier": x["code"], "num": 0})
+            output.append(x_out)
+
+        for stat in stats:
+            code = stat["carrier"]
+            i = -1
+            for idx in range(len(output)):
+                if output[idx]["carrier"] == code:
+                    output[idx]["num"] += 1
+                    i = idx
+                    
+            if i != -1:
+                if min_del_carrier == "1":
+                    if "min_del_carrier" in output:
+                        output[i]["min_del_carrier"] += stat["statistics"]["minutes_del"]["carrier"]
+                    else:
+                        output[i]["min_del_carrier"] = stat["statistics"]["minutes_del"]["carrier"]
+                if min_del_late_air == "1":
+                    if "min_del_late_air" in output:
+                        output[i]["min_del_late_air"] += stat["statistics"]["minutes_del"]["late_aircraft"]
+                    else:
+                        output[i]["min_del_late_air"] = stat["statistics"]["minutes_del"]["late_aircraft"]
+                if num_del_carrier == "1":
+                    if "num_del_carrier" in output:
+                        output[i]["num_del_carrier"] += stat["statistics"]["num_del"]["carrier"]
+                    else:
+                        output[i]["num_del_carrier"] = stat["statistics"]["num_del"]["carrier"]
+                if num_del_late_air == "1":
+                    if "num_del_late_air" in output:
+                        output[i]["num_del_late_air"] += stat["statistics"]["num_del"]["late_aircraft"]
+                    else:
+                        output[i]["num_del_late_air"] = stat["statistics"]["num_del"]["late_aircraft"]
+
+        idx = 0
+        while idx < len(output):
+            if output[idx]["num"] == 0:
+                del output[idx]
+            else:
+                idx += 1
+        
+        if min_del_carrier == "1":
+            output.sort(key=(lambda a : a["min_del_carrier"]/a["num"]))
+            for i in range(len(output)):
+                output[i]["min_del_carrier"] = i
+        if min_del_late_air == "1":
+            output.sort(key=(lambda a : a["min_del_late_air"]/a["num"]))
+            for i in range(len(output)):
+                output[i]["min_del_late_air"] = i
+        if num_del_carrier == "1":
+            output.sort(key=(lambda a : a["num_del_carrier"]/a["num"]))
+            for i in range(len(output)):
+                output[i]["num_del_carrier"] = i
+        if num_del_late_air == "1":
+            output.sort(key=(lambda a : a["num_del_late_air"]/a["num"]))
+            for i in range(len(output)):
+                output[i]["num_del_late_air"] = i
+
+        for i in range(len(output)):
+            output[i].pop("num", None)
+        
+        output.append({"link": request.path+"?mdc="+min_del_carrier+"&mdla="+min_del_late_air+"&ndc="+num_del_carrier+"&ndla="+num_del_late_air})
+        return Response(output)
+
+class CommentView(APIView):
+
+    renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (r.CSVRenderer,)
+
+    def get(self, request, format=None):
+        carrier = request.GET.get("carrier", "all")
+        comment_id = request.GET.get("id", "")
+        if comment_id != "":
+            try:
+                comment = CarrierComment.objects.get(id=comment_id)
+                comment = CarrierCommentSerializer(comment).data
+                comment["link"] = request.path+"?id="+comment_id
+                return Response(comment)
+            except:
+                return HttpResponseBadRequest("Comment does not exist.")
+        if carrier == "all":
+            comments = CarrierComment.objects.all().values()
+            links = []
+            for comment in comments:
+                links.append(request.path+"?id="+str(comment["id"]))
+            comments = CarrierCommentSerializer(CarrierComment.objects.all(),many=True).data
+            for i in range(len(comments)):
+                comments[i]["link"] = links[i]
+            return Response(comments)
+
+        try:
+            car = Carrier.objects.get(code=carrier)
+        except ObjectDoesNotExist:
+            return HttpResponseBadRequest("Carrier doesn't exist")
+        
+        comments = CarrierComment.objects.filter(carrier=carrier).values()
+        for comment in comments:
+            comment["link"] = request.path+"?id="+str(comment["id"])
+            comment["carrier"] = comment["carrier_id"]
+            del comment["carrier_id"]
+        return Response(comments)
+    
+    def post(self, request, format=None):
+        data = request.data[0]
+        comment = CarrierCommentSerializer(data=data)
+        
+        if comment.is_valid():
+            comment.save()
+            return Response()
+
+        return HttpResponseBadRequest("Please give a proper comment dictionary")
+
+    def put(self, request, format=None):
+        try:
+            data = request.data[0]
+            new_comment = CarrierCommentSerializer(data=data)
+            if not new_comment.is_valid():
+                return HttpResponseBadRequest("Request body is inadequate, read the documentation.")
+        except:
+            return HttpResponseBadRequest("Request body is inadequate, read the documentation.")
+        id = request.GET.get("id","")
+        try:
+            comment = CarrierComment.objects.filter(id=id)
+        except:
+            return Response("Please specify a proper id. Must be an int.")
+        if len(comment) != 0:
+            comment_data = CarrierCommentSerializer(comment[0])
+            comment.delete()
+        
+        if new_comment.is_valid():
+            new_comment.save()
+            return Response()
+
+        comment = CarrierCommentSerializer(comment_data)
+        comment.is_valid()
+        comment.save()
+        return HttpResponseBadRequest("Please give a proper comment dictionary")
+
+    def delete(self, request, format=None):
+        id = request.GET.get("id","")
+        try:
+            comment = CarrierComment.objects.get(id=int(id))
+            comment.delete()
+        except:
+            return HttpResponseBadRequest("Please give a proper comment id")
+        
+        return Response()
+        
+
